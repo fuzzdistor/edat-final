@@ -1,9 +1,9 @@
-package org.example;
+package TransporteDeAgua;
 
 
 import java.util.HashMap;
 
-public class Ciudad {
+public class Ciudad  implements Comparable {
     private String nombre;
     private HashMap<String, Integer> habitantesPorFecha;//k. "AAAA-MM" v. "habitantes"
     private double superficie;//en m2
@@ -24,6 +24,7 @@ public class Ciudad {
     public double getConsumoPromedio() {
         return consumoPromedio;
     }
+
     public String getNomeclatura() {
         return nomeclatura;
     }
@@ -31,8 +32,9 @@ public class Ciudad {
         return superficie;
     }
 
-    public int compareTo(Ciudad otra) {
-        return this.nombre.compareTo(otra.nombre);
+    public int compareTo(Object otra) {
+        Ciudad otraCiudad = (Ciudad)otra;
+        return this.nombre.compareTo(otraCiudad.nombre);
     }
     //formato fecha "AAAA-MM"
     public void agregarHabitantes(String fecha, int cantidad){
