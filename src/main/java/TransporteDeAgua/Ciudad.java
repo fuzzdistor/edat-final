@@ -8,11 +8,11 @@ public class Ciudad  implements Comparable {
     private HashMap<String, Integer> habitantesPorFecha;//k. "AAAA-MM" v. "habitantes"
     private double superficie;//en m2
     private double consumoPromedio; // m3/persona/dia
-    private String nomeclatura;
+    private String nomenclatura;
 
     public Ciudad(String nombre, String nomeclatura, double superficie, double consumo){
         this.nombre= nombre.toUpperCase();
-        this.nomeclatura=nomeclatura;
+        this.nomenclatura=nomeclatura;
         this.superficie=superficie;
         this.consumoPromedio=consumo;
         this.habitantesPorFecha= new HashMap<>();
@@ -25,8 +25,8 @@ public class Ciudad  implements Comparable {
         return consumoPromedio;
     }
 
-    public String getNomeclatura() {
-        return nomeclatura;
+    public String getNomenclatura() {
+        return nomenclatura;
     }
     public double getSuperficie() {
         return superficie;
@@ -48,7 +48,7 @@ public class Ciudad  implements Comparable {
     public String toString() {
         return "Ciudad{" +
             "nombre='" + nombre + '\'' +
-            ", nomenclatura='" + nomeclatura + '\'' +
+            ", nomenclatura='" + nomenclatura + '\'' +
             ", superficie=" + superficie + " m²" +
             ", consumoPromedio=" + consumoPromedio + " m³/persona/día" +
             '}';
