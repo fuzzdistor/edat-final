@@ -10,14 +10,21 @@ public class Ciudad  implements Comparable {
     private double consumoPromedio; // m3/persona/dia
     private String nomenclatura;
 
-    public Ciudad(String nombre, String nomeclatura, double superficie, double consumo){
+    public Ciudad(String nombre, double superficie, double consumo, String nomenclatura){
         this.nombre= nombre.toUpperCase();
-        this.nomenclatura=nomeclatura;
+        this.nomenclatura=nomenclatura.toUpperCase();
         this.superficie=superficie;
         this.consumoPromedio=consumo;
         this.habitantesPorFecha= new HashMap<>();
     }
-    
+     public Ciudad(String nombre, String nomenclatura){
+        this.nombre= nombre.toUpperCase();
+        this.superficie=0;
+        this.consumoPromedio=0;
+        this.habitantesPorFecha= new HashMap<>();
+        this.nomenclatura=nomenclatura;
+    }
+   
     public String getNombre(){
         return nombre;
     }
@@ -32,6 +39,10 @@ public class Ciudad  implements Comparable {
         return superficie;
     }
 
+    public void setConsumoPromedio(double unConsumo){
+        this.consumoPromedio=unConsumo;
+    }
+
     public int compareTo(Object otra) {
         Ciudad otraCiudad = (Ciudad)otra;
         return this.nombre.compareTo(otraCiudad.nombre);
@@ -42,16 +53,22 @@ public class Ciudad  implements Comparable {
     }
     public int obtenerHabitantes(int anio, int mes){
         String clave= anio +"-" +(mes < 10 ? "0" + mes : mes);;
-        return habitantesPorFecha.get(clave);
+        return habitantesPorFecha.getOrDefault(clave, 0);
     }
     
     public String toString() {
-        return "Ciudad{" +
+        return nombre;
+       
+    }
+
+    public String obtenerDetalles(){
+         return "Ciudad{" +
             "nombre='" + nombre + '\'' +
             ", nomenclatura='" + nomenclatura + '\'' +
             ", superficie=" + superficie + " m²" +
             ", consumoPromedio=" + consumoPromedio + " m³/persona/día" +
             '}';
+
     }
 
 
