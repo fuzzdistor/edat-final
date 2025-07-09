@@ -17,16 +17,16 @@ public class Tuberia {
         Inactivo
     }
 
-    private Ciudad fuente;
-    private Ciudad destino;
+    private final String nomenclaturaFuente;
+    private final String nomenclaturaDestino;
     private double caudalMin;
     private double caudalMax;
     private double diametro;
     private Estado estado;
 
-    public Tuberia(Ciudad fuente, Ciudad destino, double caudalMin, double caudalMax, double diametro, Estado estado) {
-        this.fuente = fuente;
-        this.destino = destino;
+    public Tuberia(String nomenclaturaFuente, String nomenclaturaDestino, double caudalMin, double caudalMax, double diametro, Estado estado) {
+        this.nomenclaturaFuente = nomenclaturaFuente;
+        this.nomenclaturaDestino = nomenclaturaDestino;
         this.caudalMin = caudalMin;
         this.caudalMax = caudalMax;
         this.diametro = diametro;
@@ -34,23 +34,15 @@ public class Tuberia {
     }
 
     public String getNomenclatura() {
-        return fuente.getNomenclatura() + '-' + destino.getNomenclatura();
+        return nomenclaturaFuente + '-' + nomenclaturaDestino;
     }
 
-    public Ciudad getFuente() {
-        return fuente;
+    public String getNomenclaturaFuente() {
+        return nomenclaturaFuente;
     }
 
-    public void setFuente(Ciudad fuente) {
-        this.fuente = fuente;
-    }
-
-    public Ciudad getDestino() {
-        return destino;
-    }
-
-    public void setDestino(Ciudad destino) {
-        this.destino = destino;
+    public String getNomenclaturaDestino() {
+        return nomenclaturaDestino;
     }
 
     public double getCaudalMin() {
@@ -87,8 +79,8 @@ public class Tuberia {
 
     public String toString() {
         return "Tuberia{" +
-                "fuente=" + fuente.getNomenclatura() +
-                ", destino=" + destino.getNomenclatura() +
+                "fuente=" + nomenclaturaFuente +
+                ", destino=" + nomenclaturaDestino +
                 ", caudalMin=" + caudalMin +
                 ", caudalMax=" + caudalMax +
                 ", diametro=" + diametro +
