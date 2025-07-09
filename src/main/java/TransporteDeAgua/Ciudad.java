@@ -3,9 +3,11 @@ package TransporteDeAgua;
 
 import java.util.HashMap;
 
+import Estructuras.ArbolAVL;
+
 public class Ciudad  implements Comparable {
     private String nombre;
-    private HashMap<String, Integer> habitantesPorFecha;//k. "AAAA-MM" v. "habitantes"
+    private ArbolAVL habitantesPorFecha;//k. "AAAA-MM" v. "habitantes"
     private double superficie;//en m2
     private double consumoPromedio; // m3/persona/dia
     private String nomenclatura;
@@ -15,13 +17,13 @@ public class Ciudad  implements Comparable {
         this.nomenclatura=nomenclatura.toUpperCase();
         this.superficie=superficie;
         this.consumoPromedio=consumo;
-        this.habitantesPorFecha= new HashMap<>();
+        this.habitantesPorFecha= new ArbolAVL();
     }
      public Ciudad(String nombre, String nomenclatura){
         this.nombre= nombre.toUpperCase();
         this.superficie=0;
         this.consumoPromedio=0;
-        this.habitantesPorFecha= new HashMap<>();
+        this.habitantesPorFecha= new ArbolAVL() ;
         this.nomenclatura=nomenclatura;
     }
    
@@ -38,27 +40,47 @@ public class Ciudad  implements Comparable {
     public double getSuperficie() {
         return superficie;
     }
+    public int getHabitantes(int anio, int mes) {
+     int resultado = -1;
+    
+     if (mes >= 1 && mes <= 12) {
+         RegistroAnio registro = (RegistroAnio) habitantesPorFecha.obtener(new RegistroAnio(anio));
+         if (registro != null) {
+             resultado = registro.getDatoMes(mes);
+         }
+     }
+    
+     return resultado;
+    }
 
     public void setConsumoPromedio(double unConsumo){
         this.consumoPromedio=unConsumo;
     }
 
+    public boolean setHabitantes(int anio, int mes, int cantidad) {
+      boolean exito = false;
+  
+      if (cantidad > 0 && mes >= 1 && mes <= 12) {
+          RegistroAnio registro = (RegistroAnio) habitantesPorFecha.obtener(new RegistroAnio(anio));
+          
+          if (registro == null) {
+              registro = new RegistroAnio(anio);
+              habitantesPorFecha.insertar(registro);
+          }
+  
+          registro.setDatoMensual(mes, cantidad);
+          exito = true;
+      }
+  
+      return exito;
+  }
     public int compareTo(Object otra) {
         Ciudad otraCiudad = (Ciudad)otra;
         return this.nombre.compareTo(otraCiudad.nombre);
     }
-    //formato fecha "AAAA-MM"
-    public void agregarHabitantes(String fecha, int cantidad){
-        habitantesPorFecha.put(fecha, cantidad);
-    }
-    public int obtenerHabitantes(int anio, int mes){
-        String clave= anio +"-" +(mes < 10 ? "0" + mes : mes);;
-        return habitantesPorFecha.getOrDefault(clave, 0);
-    }
     
     public String toString() {
-        return nombre;
-       
+        return nombre;  
     }
 
     public String obtenerDetalles(){
