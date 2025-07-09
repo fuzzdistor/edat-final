@@ -19,8 +19,22 @@ public class GestorTuberias {
         if (!existe) {
             Tuberia tuberia = new Tuberia(fuente, destino, caudalMin, caudalMax, diametro, estado);
             tuberias.put(nomenclatura, tuberia);
+            // TODO meter en el grafo.
         }
         return !existe;
+    }
+
+    public boolean eliminarTuberia(Ciudad fuente, Ciudad destino) {
+        return eliminarTuberia(generarNomenclatura(fuente, destino));
+    }
+
+    public boolean eliminarTuberia(String nomenclatura) {
+        boolean existe = tuberias.containsKey(nomenclatura);
+        if (existe) {
+            tuberias.remove(nomenclatura);
+            // TODO eliminar del grafo.
+        }
+        return existe;
     }
 
     public Tuberia getTuberia(Ciudad fuente, Ciudad destino) {
