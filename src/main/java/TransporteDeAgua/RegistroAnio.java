@@ -41,4 +41,23 @@ public class RegistroAnio implements Comparable {
         RegistroAnio otro= (RegistroAnio) otroRegistro;
         return anio - otro.anio;
     }
+
+
+    public String toString() {
+        String texto = "Año " + anio + ": [";
+        for (int i = 0; i < datosMensuales.length; i++) {
+            texto += "Mes " + (i + 1) + ": ";
+            if (datosMensuales[i] == -1) {
+                texto += "sin registro";
+            } else {
+                texto += datosMensuales[i];
+            }
+            if (i < datosMensuales.length - 1) {
+                texto += ", ";
+            }
+        }
+        texto += "]";
+        return texto;
+    }
+
 }

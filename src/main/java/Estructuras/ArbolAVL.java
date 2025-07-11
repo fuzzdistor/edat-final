@@ -198,21 +198,22 @@ public class ArbolAVL {
     }
 
     private void listarRangoAux(NodoAVL n, Comparable min, Comparable max, Lista ls){
-    if (n != null) {
-        Comparable elem = n.getElem();
+        int longitud= ls.longitud();
+        if (n != null) {
+            Comparable elem = n.getElem();
 
-        if (elem.compareTo(min) > 0) {
-            listarRangoAux(n.getIzquierdo(), min, max, ls);
-        }
+            if (elem.compareTo(min) > 0) {
+                listarRangoAux(n.getIzquierdo(), min, max, ls);
+            }
 
-        if (elem.compareTo(min) >= 0 && elem.compareTo(max) <= 0) {
-            ls.insertar(elem, ls.longitud() + 1);
-        }
+            if (elem.compareTo(min) >= 0 && elem.compareTo(max) <= 0) {
+                ls.insertar(elem, longitud + 1);
+            }
 
-        if (elem.compareTo(max) < 0) {
-            listarRangoAux(n.getDerecho(), min, max, ls);
+            if (elem.compareTo(max) < 0) {
+                listarRangoAux(n.getDerecho(), min, max, ls);
+            }
         }
-    }
 }
 
      public Lista listar(){
@@ -223,9 +224,10 @@ public class ArbolAVL {
         return ls;
     }
     private void listarInOrden(NodoAVL n, Lista ls){
+        int longitud= ls.longitud();
         if (n != null) {
             listarInOrden(n.getIzquierdo(), ls);
-            ls.insertar(n.getElem(), ls.longitud()+1);
+            ls.insertar(n.getElem(), longitud+1);
             listarInOrden(n.getDerecho(), ls);
         }
     }

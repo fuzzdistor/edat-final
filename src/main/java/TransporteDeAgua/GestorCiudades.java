@@ -19,7 +19,6 @@ public class GestorCiudades {
         }  
         return exito;
     }
-    
 
     public boolean eliminarCiudad(String unaCiudad){
         Ciudad tem = new Ciudad(unaCiudad, "");
@@ -30,27 +29,56 @@ public class GestorCiudades {
         Ciudad tem = new Ciudad(nombreCiudad,"");
         return (Ciudad)ciudades.obtener(tem);
     }
+    
+    public int getCantidadHabitantes(String unaCiudad, int anio, int mes) {
+        Ciudad tem = getCiudad(unaCiudad);
+    return (tem != null) ? tem.getHabitantes(anio, mes) : -1;
+    }
+
+    public double getConsumoPromedio(String unaCiudad){
+        double consumo=0;
+        Ciudad ciudad = (Ciudad) ciudades.obtener(new Ciudad(unaCiudad, ""));
+        if (ciudad != null) {
+            consumo=ciudad.getConsumoPromedio();
+        }
+        return consumo;
+    }
+
+    public double getConsumoMes(String unaCiudad, int anio, int mes){
+        double consumo=0;
+
+        Ciudad ciudad = (Ciudad) ciudades.obtener(new Ciudad(unaCiudad, ""));
+        if (ciudad != null) {
+            consumo=ciudad.getConsumoMes(anio,mes);  
+        }
+        return consumo;
+    }
+    
 
     public Lista listarCiudades(){
         return ciudades.listar();
     }
 
-    public void setConsumoPromedio(String unaCiudad, double unConsumo){
-        Ciudad tem = new Ciudad(unaCiudad,"");
-        Ciudad ciudad=(Ciudad) ciudades.obtener(tem);
+    public void setConsumoPromedio(String unaCiudad, double unConsumo) {
+    Ciudad ciudad = (Ciudad) ciudades.obtener(new Ciudad(unaCiudad, ""));
+    if (ciudad != null) {
         ciudad.setConsumoPromedio(unConsumo);
     }
+}
 
-    public int cantidadHabitantes(String unaCiudad, int anio, int mes){
-        Ciudad tem = getCiudad(unaCiudad);
-        return tem.getHabitantes(anio,mes );
-    }
+
 
     public Lista filtrarRango(String minNom, String maxNom){
         Ciudad min = new Ciudad(minNom, "");
         Ciudad max = new Ciudad(maxNom, "");
         return ciudades.listarRango(min, max);
     }
+
+    public boolean setCantidadHabitantes(String unaCiudad, int anio, int mes, int cantidad) {
+        Ciudad tem = (Ciudad) ciudades.obtener(new Ciudad(unaCiudad, ""));
+    return (tem != null) && tem.setHabitantes(anio, mes, cantidad);
+    }
+
 
     
     
