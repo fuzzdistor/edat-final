@@ -2,7 +2,7 @@ package TransporteDeAgua;
 
 import Estructuras.ArbolAVL;
 
-public class Ciudad  implements Comparable {
+public class Ciudad   {
     private String nombre;
     private ArbolAVL habitantesPorFecha;
     private double superficie;//en m2
@@ -79,11 +79,8 @@ public class Ciudad  implements Comparable {
       }
   
       return exito;
-  }
-    public int compareTo(Object otra) {
-        Ciudad otraCiudad = (Ciudad)otra;
-        return this.nombre.compareTo(otraCiudad.nombre);
     }
+    
     
     public String toString() {
         return nombre;  
