@@ -29,9 +29,7 @@ public class DiccionarioTest {
     @Test
     public void testArbolConCiudadesBalanceado() {
         Diccionario arbol = cargarArbolConCiudades();
-        String salida = arbol.toString();
-        System.out.println(salida);
-
+        String salida = arbol.toStringClaves();
         boolean contieneRaiz = isSubstring(salida, "\\[CORDOBA, BUENOS AIRES, ROSARIO\\]");
         boolean contieneBA = isSubstring(salida, "\\[BUENOS AIRES, null, null\\]");
         boolean contieneRosario = isSubstring(salida, "\\[ROSARIO, MENDOZA, SALTA\\]");
@@ -65,7 +63,6 @@ public class DiccionarioTest {
     @Test
     public void testEliminarNodoHoja() {
         Diccionario arbol = cargarArbolConCiudades();
-        // Eliminar un nodo hoja
         boolean eliminado = arbol.eliminar("SALTA");
         assertTrue(eliminado);
         // No debe encontrar la ciudad eliminada
@@ -75,9 +72,8 @@ public class DiccionarioTest {
     @Test
     public void testEliminarNodoConHijos() {
         Diccionario arbol = cargarArbolConCiudades();
-        // Eliminar nodo con hijos
+        
         boolean eliminado = arbol.eliminar("ROSARIO");
-        System.out.println(arbol.listarClaves().toString());
         assertTrue(eliminado);
         // No debe encontrar la ciudad eliminada
         assertFalse(arbol.existeClave("ROSARIO"));
@@ -103,21 +99,16 @@ public void testListarRangoClavesOrdenadas() {
 
     String desde = "BUENOS AIRES";
     String hasta = "MENDOZA";
-    Lista todas= arbol.listarClaves();
-    System.out.println("todas: " +todas.toString());
 
     Lista enRango = arbol.listarRangoDatos(desde, hasta);
-    System.out.println("rango: " +enRango.toString());
 
-    // Verificamos longitud
-    assertEquals(3, enRango.longitud()); // Debería incluir BA, CORDOBA, MENDOZA
-
-    // Verificamos contenido exacto (en orden alfabético)
+    // vrificamos longitud
+    assertEquals(3, enRango.longitud()); 
     assertEquals("BUENOS AIRES", enRango.recuperar(1));
     assertEquals("CORDOBA", enRango.recuperar(2));
     assertEquals("MENDOZA", enRango.recuperar(3));
 
-    // Verificamos orden alfabético
+    
     for (int i = 1; i < enRango.longitud(); i++) {
         String a = (String) enRango.recuperar(i);
         String b = (String) enRango.recuperar(i + 1);
@@ -129,10 +120,8 @@ public void testListarRangoClavesOrdenadas() {
   @Test
     public void testObtenerCiudadExistente() {
         Diccionario arbol = cargarArbolConCiudades();
-
-
         Ciudad resultado = (Ciudad) arbol.recuperar("ROSARIO");
-        System.out.println(resultado.obtenerDetalles());
+        assertNotNull(resultado);
     }
 
     @Test
@@ -141,7 +130,7 @@ public void testListarRangoClavesOrdenadas() {
         arbol.insertar("TERRAVIVA", new Ciudad("terraviva", null));
 
         Ciudad resultado= (Ciudad) arbol.recuperar("CINCO SALTOS");
-        assertNull("La ciudad no debe existir en el árbol", resultado);
+        assertNull("La ciudad no debe existir en el arbol", resultado);
     }
 
 

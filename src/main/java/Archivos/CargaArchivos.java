@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import Estructuras.Lista;
 import TransporteDeAgua.Ciudad;
 import TransporteDeAgua.GestorCiudades;
+import TransporteDeAgua.GestorTuberias;
+import TransporteDeAgua.Tuberia.Estado;
 
 
 public class CargaArchivos {
@@ -60,28 +62,55 @@ public class CargaArchivos {
             lineas.vaciar();
     }*/
     //formato ciudad,año,12meses
-    public static void cargarHabitantes(Path archivo, GestorCiudades gestor) {
-        Lista lineas = AdminArchivos.leerArchivo(archivo);
+  public static void cargarHabitantes(Path archivo, GestorCiudades gestor) {
+    Lista lineas = AdminArchivos.leerArchivo(archivo);
 
-        for (int i = 1; i <= lineas.longitud(); i++) {
+    for (int i = 1; i <= lineas.longitud(); i++) {
         String linea = (String) lineas.recuperar(i);
         String[] partes = linea.split(",");
 
-        if (partes.length == 14) { 
+        if (partes.length == 14) {
             String nombreCiudad = partes[0].trim().toUpperCase();
             int anio = Integer.parseInt(partes[1].trim());
 
             Ciudad ciudad = gestor.getCiudad(nombreCiudad);
             if (ciudad != null) {
-                for (int mes = 1; mes <= 12; mes++) {
-                    int cantidad = Integer.parseInt(partes[mes + 1].trim());
-                    ciudad.setHabitantes(anio, mes, cantidad);
+                int[] datosMensuales = new int[12];
+                for (int j = 0; j < 12; j++) {
+                    datosMensuales[j] = Integer.parseInt(partes[j + 2].trim());
                 }
+
+                ciudad.setHabitantesAnio(anio, datosMensuales);
             }
         }
     }
+
     lineas.vaciar();
 }
+
+
+//formato carga nomfuente,nomdestino,caudalmin,caudalmax,diametro,estado
+public static void cargarTuberias(Path archivo, GestorTuberias gestor) {
+        Lista lineas = AdminArchivos.leerArchivo(archivo);
+
+        for (int i = 1; i <= lineas.longitud(); i++) {
+            String linea = (String) lineas.recuperar(i);
+            String[] partes = linea.split(",");
+
+            if (partes.length == 6) {
+            
+                String fuente = partes[0].trim();
+                String destino = partes[1].trim();
+                double caudalMin= Double.parseDouble(partes[2]);
+                double caudalMax= Double.parseDouble(partes[3]);
+                double diametro =  Double.parseDouble(partes[4]);
+                String estadoStr = partes[5].trim();
+                Estado estado = Estado.valueOf(estadoStr);
+                gestor.crearTuberia(fuente, destino, caudalMin, caudalMax, diametro, estado);
+            }
+        }
+        lineas.vaciar();
+    }
 
 
 }

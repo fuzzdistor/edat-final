@@ -36,6 +36,9 @@ public class RegistroAnio implements Comparable {
             datosMensuales[indice]= cant;  
         }     
     }
+    public void setDatoAnual(int[]datos){
+        datosMensuales=datos;
+    }
     
     public int compareTo(Object otroRegistro){
         RegistroAnio otro= (RegistroAnio) otroRegistro;

@@ -48,6 +48,10 @@ public class GestorCiudades {
         }
         return consumo;
     }
+    public double getConsumoAnual(String unaCiudad, int anio){
+        Ciudad ciudad = (Ciudad) ciudades.recuperar(unaCiudad.toUpperCase());
+        return ciudad.getConsumoAnual(anio);
+    }
     
 
     public Lista listarNomCiudades(){
@@ -66,13 +70,34 @@ public class GestorCiudades {
     }
 
 
+    public Lista filtrarNombreVolumen(String minNom, String maxNom, double minVol, double maxVol, int anio, int mes){
 
-    public Lista filtrarRango(String minNom, String maxNom){
-        return ciudades.listarRangoDatos(minNom.toUpperCase(), maxNom.toUpperCase());
+        Lista filtroNombre= ciudades.listarRangoDatos(minNom.toUpperCase(), maxNom.toUpperCase());
+        Lista filtroTotal= new Lista();
+        for (int i = 1; i <= filtroNombre.longitud(); i++) {
+            Ciudad ciudad = (Ciudad) filtroNombre.recuperar(i);
+            double consumo = getConsumoMes(ciudad.getNombre(), anio, mes);
+            if (consumo >= minVol && consumo <= maxVol) {
+                filtroTotal.insertar(ciudad, filtroTotal.longitud() + 1);
+            }
+        }
+
+    return filtroTotal;
     }
+
 
     public boolean setCantidadHabitantes(String unaCiudad, int anio, int mes, int cantidad) {
         Ciudad tem = (Ciudad) ciudades.recuperar(unaCiudad.toUpperCase());
     return (tem != null) && tem.setHabitantes(anio, mes, cantidad);
-    }    
+    }   
+    
+    public boolean setCantidadHabitantesAnio(String unaCiudad, int anio, int []datos){
+        boolean exito=false;
+        Ciudad tem=(Ciudad) ciudades.recuperar(unaCiudad.toUpperCase());
+        if(tem!=null && datos.length==12){
+            tem.setHabitantesAnio(anio, datos);
+            exito=true;
+        }
+        return exito;
+    }
 }

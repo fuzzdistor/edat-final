@@ -80,13 +80,32 @@ public class Ciudad   {
   
       return exito;
     }
-    
-    
-    public String toString() {
-        return nombre;  
+    public void setHabitantesAnio(int anio, int[]datos){
+        RegistroAnio registro = (RegistroAnio) habitantesPorFecha.obtener(new RegistroAnio(anio));
+        if (registro == null) {
+              registro = new RegistroAnio(anio);
+              habitantesPorFecha.insertar(registro);
+          }
+        registro.setDatoAnual(datos);
+        
+    }
+    public double getConsumoAnual(int anio) {
+        RegistroAnio registro = (RegistroAnio) habitantesPorFecha.obtener(new RegistroAnio(anio));
+        double suma=0;
+        if (registro != null){
+            suma = 0;
+            for (int i = 0; i < 12; i++) {
+                double valor = getConsumoMes(anio, i + 1); // meses del 1 al 12
+                if (valor != -1) {
+                    suma += valor;
+                }
+            }
+        }
+    return suma;
     }
 
-    public String obtenerDetalles(){
+
+    public String toString(){
          return "Ciudad{" +
             "nombre='" + nombre + '\'' +
             ", nomenclatura='" + nomenclatura + '\'' +

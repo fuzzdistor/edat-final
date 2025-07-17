@@ -182,14 +182,14 @@ private NodoAVLDicc obtenerMinimoNodo(NodoAVLDicc nodo) {
     }
 
 
-    private String toString(NodoAVLDicc nodo, String s) {
+    private String toStringDatos(NodoAVLDicc nodo, String s) {
         if (nodo != null) {
             s += '[' + nodo.getDato().toString() + ", ";
             s += nodo.getIzquierdo() != null? nodo.getIzquierdo().getDato().toString() + ", " : "null, ";
             s += nodo.getDerecho() != null? nodo.getDerecho().getDato().toString() + "], " : "null],";
             s+= "\n" ;
-            s = toString(nodo.getIzquierdo(), s);
-            s = toString(nodo.getDerecho(), s);
+            s = toStringDatos(nodo.getIzquierdo(), s);
+            s = toStringDatos(nodo.getDerecho(), s);
         }
         return s;
     }
@@ -197,10 +197,23 @@ private NodoAVLDicc obtenerMinimoNodo(NodoAVLDicc nodo) {
     public String toString() {
 
         String s = "[";
-        s = toString(raiz, s);
+        s = toStringDatos(raiz, s);
         if (s.length() > 1)
         s = s.substring(0, s.length() - 1);
         return s + ']';
+    }
+
+    public String toStringClaves() {
+        return toStringClaves(raiz, "");
+    }
+
+    private String toStringClaves(NodoAVLDicc nodo, String s) {
+        if (nodo != null) {
+            s += nodo.getClave().toString() + "\n";
+            s = toStringClaves(nodo.getIzquierdo(), s);
+            s = toStringClaves(nodo.getDerecho(), s);
+        }
+        return s;
     }
     
     public Lista listarRangoDatos(Comparable min, Comparable max){
