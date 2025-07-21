@@ -3,6 +3,7 @@ package TransporteDeAgua;
 import java.nio.file.Path;
 
 import Archivos.CargaArchivos;
+import Estructuras.HeapMax;
 import Estructuras.Lista;
 import TransporteDeAgua.Tuberia.Estado;
 
@@ -73,6 +74,19 @@ public class Sistema {
 
         return gestorCiudades.setCantidadHabitantesAnio(unaCiudad, anio, datos);
     }
+
+    public HeapMax ciudadesOrdenadasPorConsumo(int anio) {
+    Lista listaCiudades = gestorCiudades.listarCiudades(); 
+    HeapMax heap = new HeapMax(listaCiudades.longitud());
+
+    for (int i = 1; i <= listaCiudades.longitud(); i++) {
+        Ciudad ciudad = (Ciudad) listaCiudades.recuperar(i);
+        double consumo = ciudad.getConsumoAnual(anio);
+        heap.insertar(new ConsumoCiudad(ciudad.getNombre(), consumo));
+    }
+
+    return heap;
+}
 
     
     //CONSULTAS SOBRE TUBERIAS
