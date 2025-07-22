@@ -38,15 +38,19 @@ public class GestorTuberias {
         this.tuberias = new HashMap<>();
     }
 
-    public boolean crearTuberia(Ciudad fuente, Ciudad destino, double caudalMin, double caudalMax, double diametro, Tuberia.Estado estado) {
-        LlaveTuberias llave = new LlaveTuberias(fuente.getNomenclatura(), destino.getNomenclatura());
+    public boolean crearTuberia(String nomenclaturaFuente, String nomenclaturaDestino, double caudalMin, double caudalMax, double diametro, Tuberia.Estado estado) {
+        LlaveTuberias llave = new LlaveTuberias(nomenclaturaFuente, nomenclaturaDestino);
         boolean existe = tuberias.containsKey(llave);
         if (!existe) {
-            Tuberia tuberia = new Tuberia(fuente.getNomenclatura(), destino.getNomenclatura(), caudalMin, caudalMax, diametro, estado);
+            Tuberia tuberia = new Tuberia(nomenclaturaFuente, nomenclaturaDestino, caudalMin, caudalMax, diametro, estado);
             tuberias.put(llave, tuberia);
             // TODO meter en el grafo.
         }
         return !existe;
+    }
+
+    public boolean crearTuberia(Ciudad fuente, Ciudad destino, double caudalMin, double caudalMax, double diametro, Tuberia.Estado estado) {
+        return crearTuberia(fuente.getNomenclatura(), destino.getNomenclatura(), caudalMin, caudalMin, diametro, estado);
     }
 
     public boolean eliminarTuberia(Ciudad fuente, Ciudad destino) {

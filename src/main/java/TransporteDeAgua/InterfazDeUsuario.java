@@ -1,17 +1,30 @@
-package tpFinal;
+package TransporteDeAgua;
 
 import java.util.Scanner;
 
-public class interfazDeUsuario {
+public class InterfazDeUsuario {
     Scanner sc = new Scanner(System.in);
+    Sistema sistema;
 
-    public interfazDeUsuario() {// constructor
-
-    };
-
-    public void ejecutar() {
-        menuPrincipal();
+    public enum Operaciones {
+        AltaCiudad,
+        BajaCiudad,
+        ModificarCiudad,
+        ConsultarCiudad,
+        AltaTuberia,
+        BajaTuberia,
+        ModificarTuberia,
+        ConsultarTuberia,
+        ConsultaConsumoPorRango,
+        CaminoConMenorCaudalPleno,
+        CaminoConMenorCantidadCiudades,
+        RankingPorAnio,
+        MostrarSistema,
     }
+
+    public InterfazDeUsuario(Sistema sistema) {// constructor
+        this.sistema = sistema;
+    };
 
     private void menuPrincipal() {
         System.out.println("-------< MENU >-------");
@@ -49,11 +62,11 @@ public class interfazDeUsuario {
         System.out.println("| 1. Dar de alta una ciudad");
         System.out.println("| 2. Dar de baja una ciudad");
         System.out.println("| 3. Modificar una ciudad");
-        System.out.println("| 4. Consultar (cantidad de habitantes y volumen de agua)");
-        System.out.println("| 5. Ciudades que han consumido un volumen de agua en un rango");
-        System.out.println("| 6. Listar ciudades de menor a mayor consumo de agua en un año");
+        System.out.println("| 4. Consultar cantidad de habitantes y volumen de agua distribuido de una ciudad");
+        System.out.println("| 5. Listar ciudades que han consumido un volumen de agua en un rango en un mes de un año");
+        System.out.println("| 6. Listar ciudades por consumo de agua en un año de mayor a menor");
         System.out.println("| 7. Ir al menu principal");
-        System.out.println("|x. Salir");
+        System.out.println("| x. Salir");
 
         String respuesta = sc.nextLine();
 
@@ -63,29 +76,23 @@ public class interfazDeUsuario {
                 break;
             case "2":
                 // Pedir una ciudar y eliminarla
-
                 break;
             case "3":
                 // Pedir una ciudad y modificarla
-
                 break;
             case "4":
                 // Dar la cantidad de habitantes y el volumen de agua de una ciudad
-
                 break;
             case "5":
                 // pedir un nummin y maxmax y listar la listas que tienen un volumen de agua
                 // entre esas valores en un año y mes especifico
-
                 break;
             case "6":
                 // Dado un anio, listar las ciudades de menor a mayor en base al consumo de agua
                 // anual
-
                 break;
             case "7":
                 menuPrincipal();
-
                 break;
 
             default:
@@ -106,7 +113,6 @@ public class interfazDeUsuario {
 
                 case "2":
                     menuCiudades();
-                    ;
                     break;
 
                 default:

@@ -227,44 +227,42 @@ public class Grafo {
     }
 
     public boolean existeCamino(Object origen, Object destino) {
-
         NodoVert nodoOrigen = ubicarVertice(origen);
         NodoVert nodoDestino = ubicarVertice(destino);
+        boolean existen = nodoOrigen != null && nodoDestino != null;
+        boolean sonIguales = nodoOrigen == nodoDestino;
 
-        if (nodoOrigen == null || nodoDestino == null) {
-            return false;
+        boolean hayCamino = existen && sonIguales;
+
+        if (existen && !sonIguales) {
+            Lista visitados = new Lista();
+            hayCamino = existeCaminoAux(nodoOrigen, nodoDestino, visitados);
         }
 
-        if (nodoOrigen == nodoDestino) {
-            return true;
-        }
-
-        Lista visitados = new Lista();
-        return existeCaminoAux(nodoOrigen, nodoDestino, visitados);
+        return hayCamino;
     }
 
     private boolean existeCaminoAux(NodoVert actual, NodoVert destino, Lista visitados) {
-
+        boolean encontrado = false;
         visitados.insertar(actual.getElem(), visitados.longitud() + 1);
 
         NodoAdy adyacente = actual.getPrimerAdy();
         while (adyacente != null) {
             NodoVert vecino = adyacente.getVertice();
 
-            if (vecino == destino) {
-                return true;
-            }
+            encontrado = vecino == destino;
 
-            if (visitados.localizar(vecino.getElem()) < 0) {
+            if (!encontrado && visitados.localizar(vecino.getElem()) < 0) {
                 if (existeCaminoAux(vecino, destino, visitados)) {
-                    return true;
+                    encontrado = true;
                 }
             }
 
-            adyacente = adyacente.getSigAdyacente();
+            if (!encontrado) {
+                adyacente = adyacente.getSigAdyacente();
+            }
         }
-
-        return false;
+        return encontrado;
     }
 
     public boolean esVacio() {
