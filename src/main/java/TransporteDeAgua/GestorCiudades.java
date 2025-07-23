@@ -78,10 +78,10 @@ public class GestorCiudades {
         Lista filtroNombre= ciudades.listarRangoDatos(minNom.toUpperCase(), maxNom.toUpperCase());
         Lista filtroTotal= new Lista();
         for (int i = 1; i <= filtroNombre.longitud(); i++) {
-            Ciudad ciudad = (Ciudad) filtroNombre.recuperar(i);
-            double consumo = getConsumoMes(ciudad.getNombre(), anio, mes);
+            String ciudad =( (Ciudad) filtroNombre.recuperar(i)).getNombre();
+            double consumo = getConsumoMes(ciudad, anio, mes);
             if (consumo >= minVol && consumo <= maxVol) {
-                filtroTotal.insertar(ciudad, filtroTotal.longitud() + 1);
+                filtroTotal.insertar(new ConsumoCiudad(ciudad, consumo), filtroTotal.longitud() + 1);
             }
         }
 

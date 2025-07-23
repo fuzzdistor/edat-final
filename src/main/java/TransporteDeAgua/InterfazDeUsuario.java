@@ -231,7 +231,10 @@ public class InterfazDeUsuario {
         System.out.println("----RANKING CONSUMO "+anio+"----");
 
         while(!ranking.esVacio()){
-            System.out.println(ranking.recuperarCima().toString());
+            ConsumoCiudad consumo=(ConsumoCiudad) ranking.recuperarCima();
+            if(consumo.getConsumo()>0){
+                System.out.println(consumo.toString());
+            }
             ranking.eliminarCima();
         }
 
@@ -252,7 +255,16 @@ public class InterfazDeUsuario {
         int mes = Integer.parseInt(sc.nextLine());
 
         Lista ciudadesFiltradas= sistema.filtrarCiudades(minNom, maxNom, minVol, maxVol, anio, mes);
-        System.out.println(ciudadesFiltradas.toString() );
+        if(!ciudadesFiltradas.esVacia()){
+            System.out.println("-----Ciudades en rango-----");
+            while(!ciudadesFiltradas.esVacia()){
+                ConsumoCiudad ciudad= (ConsumoCiudad)ciudadesFiltradas.recuperar(1);
+                System.out.println(ciudad.toString());
+                ciudadesFiltradas.eliminar(1);
+            }
+        }else{
+            System.out.println("No hay informacion para los datos indicados.");
+        }
     }
     
     private void consultarCiudad() {
@@ -270,12 +282,18 @@ public class InterfazDeUsuario {
             int mes = Integer.parseInt(sc.nextLine());
 
             int habitantes = sistema.habitantes(nombre,anio, mes);
-            double volumenEstimado = sistema.consumoMes(nombre, anio, mes);
-        
             System.out.println("\nCiudad: " + nombre);
             System.out.println("Año: " + anio + " - Mes: " + mes);
-            System.out.println("Cantidad de habitantes: " + habitantes);
-            System.out.println("Volumen distribuido estimado (habitantes × consumo promedio): " + volumenEstimado + " litros");
+            if (habitantes>0) {
+                double volumenEstimado = sistema.consumoMes(nombre, anio, mes);
+                String volString = String.format("%.2f", volumenEstimado);
+            
+                System.out.println("Cantidad de habitantes: " + habitantes);
+                System.out.println("Volumen distribuido estimado (habitantes por consumo promedio): " + volString + " litros");
+                
+            }else{
+                System.out.println("No hay informacion para mostrar en la fecha indicada.");
+            }
         
         }
 
@@ -307,9 +325,6 @@ public class InterfazDeUsuario {
                     break;
                 case "3":
                     menuCiudades();
-                    break;
-                case "4":
-                    salir = true; 
                     break;
                 default:
                     System.out.println("Opcion invalida.");
@@ -554,4 +569,8 @@ public class InterfazDeUsuario {
         System.out.println("----Estado del sistema----");
        // System.out.println(sistema.mostrarSistema());
     }
+    //
+    public void iniciar() {
+    menuPrincipal();
+}
 }

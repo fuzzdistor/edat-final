@@ -104,7 +104,7 @@ public static void cargarTuberias(Path archivo, GestorTuberias gestor) {
                 double caudalMin= Double.parseDouble(partes[2]);
                 double caudalMax= Double.parseDouble(partes[3]);
                 double diametro =  Double.parseDouble(partes[4]);
-                String estadoStr = partes[5].trim();
+                String estadoStr = partes[5].trim().toUpperCase();
                 Estado estado = Estado.valueOf(estadoStr);
                 gestor.crearTuberia(fuente, destino, caudalMin, caudalMax, diametro, estado);
             }
