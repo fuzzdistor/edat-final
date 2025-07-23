@@ -24,6 +24,9 @@ public class GestorCiudades {
     public Ciudad getCiudad(String nombreCiudad){
         return (Ciudad)ciudades.recuperar(nombreCiudad.toUpperCase());
     }
+    public boolean existeCiudad(String nombreCiudad){
+        return ((Ciudad)ciudades.recuperar(nombreCiudad.toUpperCase()))!=null;
+    }
     
     public int getCantidadHabitantes(String unaCiudad, int anio, int mes) {
         Ciudad tem = (Ciudad)ciudades.recuperar(unaCiudad.toUpperCase());

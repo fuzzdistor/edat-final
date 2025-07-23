@@ -40,6 +40,9 @@ public class Sistema {
     public boolean eliminarCiudad(String unaCiudad){
         return gestorCiudades.eliminarCiudad(unaCiudad);
     }
+    public boolean existeCiudad(String nombre){
+        return gestorCiudades.existeCiudad(nombre);
+    }
     
     public double consumoMes(String ciudad, int anio, int mes) {
         return gestorCiudades.getConsumoMes(ciudad, anio, mes);
@@ -110,6 +113,34 @@ public class Sistema {
 
     public String getCaminoMinimo(String fuente, String Destino){
         return "";
+    }
+
+    public boolean setCaudalMax(String fuente, String destino, double caudal){
+        boolean exito= false;
+        Ciudad fuenteC= gestorCiudades.getCiudad(fuente);
+        Ciudad destinoC= gestorCiudades.getCiudad(destino);
+        if(fuenteC!=null && gestorCiudades!=null){
+            String nom1= fuenteC.getNomenclatura();
+            String nom2= fuenteC.getNomenclatura();
+            exito= gestorTuberias.setCaudalMax(nom1,nom2,caudal);//falta este metodo en el gestor tuberias
+        }
+        return exito;    
+    }
+
+     public boolean setCaudalMin(String fuente, String destino, double caudal){
+        boolean exito= false;
+        Ciudad fuenteC= gestorCiudades.getCiudad(fuente);
+        Ciudad destinoC= gestorCiudades.getCiudad(destino);
+        if(fuenteC!=null && gestorCiudades!=null){
+            String nom1= fuenteC.getNomenclatura();
+            String nom2= fuenteC.getNomenclatura();
+            exito= gestorTuberias.setCaudalMin(nom1,nom2,caudal);//falta este metodo en el gestor tuberias
+        }
+        return exito;    
+    }
+
+    public String mostrarSistema(){
+        return"";
     }
 
 
