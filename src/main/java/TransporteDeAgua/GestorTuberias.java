@@ -1,5 +1,7 @@
 package TransporteDeAgua;
 
+import Estructuras.Grafo;
+
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -33,8 +35,11 @@ public class GestorTuberias {
     }
 
     private final HashMap<LlaveTuberias, Tuberia> tuberias;
+    private Grafo grafo;
+
 
     public GestorTuberias() {
+        this.grafo = new Grafo();
         this.tuberias = new HashMap<>();
     }
 
@@ -51,6 +56,16 @@ public class GestorTuberias {
 
     public boolean crearTuberia(Ciudad fuente, Ciudad destino, double caudalMin, double caudalMax, double diametro, Tuberia.Estado estado) {
         return crearTuberia(fuente.getNomenclatura(), destino.getNomenclatura(), caudalMin, caudalMin, diametro, estado);
+    }
+
+    public boolean setCaudalMax(String fuente, String destino, double caudalMax) {
+        // TODO checkear si la tuberia existe, modificarla y modificar la etiqueta en el grafo
+        return false;
+    }
+
+    public boolean setCaudalMin(String fuente, String destino, double caudalMin) {
+        // TODO checkear si la tuberia existe y modificarla
+        return false;
     }
 
     public boolean eliminarTuberia(Ciudad fuente, Ciudad destino) {
