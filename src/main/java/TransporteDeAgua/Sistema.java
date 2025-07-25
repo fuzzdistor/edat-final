@@ -60,8 +60,8 @@ public class Sistema {
         return gestorCiudades.filtrarNombreVolumen(minNom, maxNom, minVol, maxVol, anio, mes);
     }
     
-    public void agregarHabitantes(String ciudad, int anio, int mes, int cantidad){
-        gestorCiudades.setCantidadHabitantes(ciudad, anio, mes, cantidad);
+    public boolean setCantidadHabitantes(String ciudad, int anio, int mes, int cantidad){
+        return gestorCiudades.setCantidadHabitantes(ciudad, anio, mes, cantidad);
     }
     
     public void mostrarCiudades() {
@@ -69,8 +69,9 @@ public class Sistema {
         ciudades.toString();
     }
 
-    public void setConsumoPromedio(String unaCiudad, double unConsumo){
-        gestorCiudades.setConsumoPromedio(unaCiudad, unConsumo);
+    public boolean setConsumoPromedio(String unaCiudad, double unConsumo){
+        
+        return gestorCiudades.setConsumoPromedio(unaCiudad, unConsumo);
     }
 
     public boolean setCantidadHabitantesAnio(String unaCiudad, int anio, int[]datos){
@@ -119,7 +120,7 @@ public class Sistema {
         boolean exito= false;
         Ciudad fuenteC= gestorCiudades.getCiudad(fuente);
         Ciudad destinoC= gestorCiudades.getCiudad(destino);
-        if(fuenteC!=null && gestorCiudades!=null){
+        if(fuenteC!=null && destinoC!=null){
             String nom1= fuenteC.getNomenclatura();
             String nom2= fuenteC.getNomenclatura();
             exito= gestorTuberias.setCaudalMax(nom1,nom2,caudal);//falta este metodo en el gestor tuberias
@@ -131,7 +132,7 @@ public class Sistema {
         boolean exito= false;
         Ciudad fuenteC= gestorCiudades.getCiudad(fuente);
         Ciudad destinoC= gestorCiudades.getCiudad(destino);
-        if(fuenteC!=null && gestorCiudades!=null){
+        if(fuenteC!=null && destinoC!=null){
             String nom1= fuenteC.getNomenclatura();
             String nom2= fuenteC.getNomenclatura();
             exito= gestorTuberias.setCaudalMin(nom1,nom2,caudal);//falta este metodo en el gestor tuberias
@@ -140,7 +141,10 @@ public class Sistema {
     }
 
     public String mostrarSistema(){
-        return"";
+
+        String ciudades= "Estructura Ciudades \n"+gestorCiudades.toStringCiudades();
+        //falta el resto de las estructuras
+        return ciudades;
     }
 
 

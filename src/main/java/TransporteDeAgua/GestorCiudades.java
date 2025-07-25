@@ -43,7 +43,9 @@ public class GestorCiudades {
     }
 
     public double getConsumoMes(String unaCiudad, int anio, int mes){
-        double consumo=0;
+        //-1 si la ciduda no existe
+        //0 si no hay registro de habitantes para ese mes/anio
+        double consumo=-1;
 
         Ciudad ciudad = (Ciudad) ciudades.recuperar(unaCiudad.toUpperCase());
         if (ciudad != null) {
@@ -52,8 +54,14 @@ public class GestorCiudades {
         return consumo;
     }
     public double getConsumoAnual(String unaCiudad, int anio){
+        //-1 si si la ciduda no existe
+        //0 si no hay registro de habitantes para ese mes/anio
+        double consumo=-1;
         Ciudad ciudad = (Ciudad) ciudades.recuperar(unaCiudad.toUpperCase());
-        return ciudad.getConsumoAnual(anio);
+        if(ciudad!=null){
+            consumo=ciudad.getConsumoAnual(anio);
+        }
+        return consumo;
     }
     
 
@@ -65,11 +73,14 @@ public class GestorCiudades {
         return ciudades.listarDatos();
     }
 
-    public void setConsumoPromedio(String unaCiudad, double unConsumo) {
+    public boolean setConsumoPromedio(String unaCiudad, double unConsumo) {
+        boolean exito=false;
         Ciudad ciudad = (Ciudad) ciudades.recuperar(unaCiudad.toUpperCase());
         if (ciudad != null) {
             ciudad.setConsumoPromedio(unConsumo);
+            exito=true;
         }
+        return exito;
     }
 
 
@@ -102,5 +113,9 @@ public class GestorCiudades {
             exito=true;
         }
         return exito;
+    }
+
+    public String toStringCiudades(){
+        return ciudades.toStringClaves();
     }
 }

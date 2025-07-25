@@ -50,7 +50,7 @@ public class InterfazDeUsuario {
         System.out.println("\t <Ciudad>");
         System.out.println("| 1. Dar de alta una ciudad");
         System.out.println("| 2. Dar de baja una ciudad");
-        System.out.println("| 3. Modificar consumo promedio");
+        System.out.println("| 3. Modificar una ciudad");
         System.out.println("| 4. Consultar cantidad de habitantes y volumen de agua distribuido de una ciudad");
         System.out.println("| 5. Listar ciudades que han consumido un volumen de agua en un rango en un mes de un año");
         System.out.println("| 6. Listar ciudades por consumo de agua en un año de mayor a menor");
@@ -341,8 +341,15 @@ public class InterfazDeUsuario {
         int mes = Integer.parseInt(sc.nextLine());
         System.out.print("Cantidad de habitantes: ");
         int cantidad = Integer.parseInt(sc.nextLine());
-        sistema.agregarHabitantes(nombre, anio, mes, cantidad);
-        System.out.println("Cantidad de habitantes actualizada.");
+        boolean exito= sistema.setCantidadHabitantes(nombre, anio, mes, cantidad);
+        if(exito){
+            System.out.println("Cantidad de habitantes actualizada."); 
+        }else{
+            System.out.println("Error realizando la modificacion");
+        }
+        
+
+       
     }
 
 
@@ -351,15 +358,19 @@ public class InterfazDeUsuario {
         System.out.print("Nuevo consumo promedio: ");
         double nuevoConsumo = sc.nextDouble();
         sc.nextLine();
-        sistema.setConsumoPromedio(ciudad, nuevoConsumo);
-        System.out.println("Consumo promedio actualizado.");
+        boolean exito= sistema.setConsumoPromedio(ciudad, nuevoConsumo);
+        if(exito){
+           System.out.println("Consumo promedio actualizado."); 
+        }else{
+            System.out.println("Error modificando el consumo promedio, verifique la existencia de la ciudad");
+        }
+        
     }
 
 
     private void bajaCiudad() {
         System.out.print("Ingrese el nombre de la ciudad a eliminar: ");
         String nombre = sc.nextLine().toUpperCase();
-
         boolean exito = sistema.eliminarCiudad(nombre);
 
         if (exito) {
@@ -390,21 +401,19 @@ public class InterfazDeUsuario {
 
     
     //CONSULTAS SOBRE TUBERIAS
-    
     private void modificarTuberia() {
         System.out.print("Ingrese nombre de la ciudad fuente: ");
         String fuente = sc.nextLine().toUpperCase();
         System.out.print("Ingrese nombre de la ciudad destino: ");
         String destino = sc.nextLine().toUpperCase();
         boolean salir = false;
-
         while (!salir) {
             System.out.println("\n¿Que desea modificar?");
             System.out.println("1. Estado Tuberia ");
             System.out.println("2. Caudal Minimo ");
             System.out.println("3. Caudal Maximo");
             System.out.println("4. Volver al menu de tuberias");
-            System.out.println("5. Salir");
+            System.out.println("x. Salir");
             System.out.print("Seleccione una opción: ");
             String opcion = sc.nextLine().trim();
 
@@ -418,17 +427,19 @@ public class InterfazDeUsuario {
                 case "3":
                     modificarCaudarMax(fuente, destino);
                     break;
-                case "4":
+
+                case"4":
                     menuTuberias();
                     break;
-                case "5":
-                    salir = true; 
-                    break;
+                    
                 default:
                     System.out.println("Opcion invalida.");
             }
         }
     }
+
+    
+    
 
 
     private void modificarCaudarMax(String fuente, String destino) {
@@ -458,8 +469,14 @@ public class InterfazDeUsuario {
 
 
     private void modificarEstadoTuberia(String fuente, String destino) {
+        boolean exito = false;
         String estado=estadoTuberia();
-        sistema.cambiarEstadoTuberia(fuente, destino, estado);
+        exito= sistema.cambiarEstadoTuberia(fuente, destino, estado);
+        if(exito){
+            System.out.println("Modificacion de estado finalizada con exito");
+        }else{
+            System.out.println("Error modificando el estado verifque la existencia de la tuberia.");
+        }
     }
 
 
@@ -478,36 +495,36 @@ public class InterfazDeUsuario {
     }
     private String estadoTuberia(){
        String estado = "";
-    boolean valido = false;
+        boolean valido = false;
 
-    while (!valido) {
-        System.out.print("Seleccione el estado de la tubería (1-Activo, 2-Inactivo, 3-En reparacion, 4-En Diseño): ");
-        String opcionEstado = sc.nextLine().trim();
+        while (!valido) {
+            System.out.print("Seleccione el estado de la tubería (1-Activo, 2-Inactivo, 3-En reparacion, 4-En Diseño): ");
+            String opcionEstado = sc.nextLine().trim();
 
-        switch (opcionEstado) {
-            case "1":
-                estado = "ACTIVO";
-                valido = true;
-                break;
-            case "2":
-                estado = "INACTIVO";
-                valido = true;
-                break;
-            case "3":
-                estado = "ENREPARACION";
-                valido = true;
-                break;
-            case "4":
-                estado = "ENDISENIO";
-                valido = true;
-                break;
-            default:
-                System.out.println("Estado invalido. Intente nuevamente.");
+            switch (opcionEstado) {
+                case "1":
+                    estado = "ACTIVO";
+                    valido = true;
+                    break;
+                case "2":
+                    estado = "INACTIVO";
+                    valido = true;
+                    break;
+                case "3":
+                    estado = "ENREPARACION";
+                    valido = true;
+                    break;
+                case "4":
+                    estado = "ENDISENIO";
+                    valido = true;
+                    break;
+                default:
+                    System.out.println("Estado invalido. Intente nuevamente.");
+            }
         }
-    }
 
-    return estado;
-}
+        return estado;
+    }
     
     private void altaTuberia() {
 
@@ -521,12 +538,9 @@ public class InterfazDeUsuario {
         double caudalMax=  Double.parseDouble(sc.nextLine());
         System.out.print("Ingrese el diametro: ");
         double diametro = Double.parseDouble(sc.nextLine());
-        System.out.print("Seleccione el estado de la tuberia 1-Activo 2-Inactivo 3-En reparacion 4-En Disenio ");
-        String  opcionEstado =sc.nextLine();
-        String posibilidades= "1234";
-        if(posibilidades.indexOf(opcionEstado)!=-1){
-            String estado= estadoTuberia();
-            boolean exito=sistema.crearTuberia(fuente, destino, caudalMin, caudalMax, diametro, estado);
+        String  opcionEstado =estadoTuberia();
+        if(!opcionEstado.equals("")){
+            boolean exito=sistema.crearTuberia(fuente, destino, caudalMin, caudalMax, diametro, opcionEstado);
             if(exito){
                 System.out.println("Alta tuberia finalizada con exito");
             }else{
@@ -567,6 +581,7 @@ public class InterfazDeUsuario {
         // Mostrar todas las estructuras utilizadas en ejecucucion, Grafo, AVL y Mapeo,
         // utilizar sus toString()
         System.out.println("----Estado del sistema----");
+        System.out.println(sistema.mostrarSistema());
        // System.out.println(sistema.mostrarSistema());
     }
     //

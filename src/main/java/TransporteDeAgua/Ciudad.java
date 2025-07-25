@@ -54,13 +54,19 @@ public class Ciudad   {
         double consumo=0;
         int cantidadHabitantes= getHabitantes(anio, mes);
         if(cantidadHabitantes>0){
-            consumo= cantidadHabitantes*consumoPromedio;    
+            consumo= cantidadHabitantes*consumoPromedio*30;    
         }
         return consumo;
     }
 
-    public void setConsumoPromedio(double unConsumo){
-        this.consumoPromedio=unConsumo;
+    public boolean setConsumoPromedio(double unConsumo){
+        boolean exito=false;
+        if(unConsumo>0){
+         this.consumoPromedio=unConsumo; 
+         exito=true;  
+        }
+        return exito;
+        
     }
 
     public boolean setHabitantes(int anio, int mes, int cantidad) {
@@ -94,8 +100,8 @@ public class Ciudad   {
         double suma=0;
         if (registro != null){
             suma = 0;
-            for (int i = 0; i < 12; i++) {
-                double valor = getConsumoMes(anio, i + 1); // meses del 1 al 12
+            for (int i = 1; i <= 12; i++) {
+                double valor = getConsumoMes(anio, i); // meses del 1 al 12
                 if (valor != -1) {
                     suma += valor;
                 }
