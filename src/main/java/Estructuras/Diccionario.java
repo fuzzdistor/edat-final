@@ -194,7 +194,7 @@ private NodoAVLDicc obtenerMinimoNodo(NodoAVLDicc nodo) {
         return s;
     }
     
-    public String toString() {
+    public String toStringDatos() {
 
         String s = "[";
         s = toStringDatos(raiz, s);
@@ -204,17 +204,32 @@ private NodoAVLDicc obtenerMinimoNodo(NodoAVLDicc nodo) {
     }
 
     public String toStringClaves() {
-        return toStringClaves(raiz, "");
+        String resultado = "";
+        resultado = toStringAux(raiz, resultado);
+        return resultado;
     }
 
-    private String toStringClaves(NodoAVLDicc nodo, String s) {
+    private String toStringAux(NodoAVLDicc nodo, String s) {
         if (nodo != null) {
-            s += nodo.getClave().toString() + "\n";
-            s = toStringClaves(nodo.getIzquierdo(), s);
-            s = toStringClaves(nodo.getDerecho(), s);
+            // nodo actual
+            s += nodo.getClave() + " (alt: " + nodo.getAltura() + ") ";
+
+            // hijo izquierdo
+            s += "HI: ";
+            s += (nodo.getIzquierdo() != null) ? nodo.getIzquierdo().getClave() : "-";
+
+            // hijo derecho
+            s += " HD: ";
+            s += (nodo.getDerecho() != null) ? nodo.getDerecho().getClave() : "-";
+
+            s += "\n";
+            s = toStringAux(nodo.getIzquierdo(), s);
+            s = toStringAux(nodo.getDerecho(), s);
         }
         return s;
     }
+
+
     
     public Lista listarRangoDatos(Comparable min, Comparable max){
         Lista ls = new Lista();
