@@ -129,7 +129,7 @@ public class Grafo {
         NodoVert nodoDestino = this.ubicarVertice(destino);
 
         if (nodoOrigen != null && nodoDestino != null && etiqueta != null) {
-            // Verifico si el arco ya existe 
+            // Verifico si el arco ya existe
             NodoAdy arcoActual = nodoOrigen.getPrimerAdy();
             while (arcoActual != null && !exito) {
                 if (arcoActual.getVertice().getElem().equals(destino) &&
@@ -143,89 +143,177 @@ public class Grafo {
                 // Insertar nuevo arco etiquetado
                 NodoAdy nuevoArco = new NodoAdy(nodoDestino, nodoOrigen.getPrimerAdy(), etiqueta);
                 nodoOrigen.setPrimerAdy(nuevoArco);
-                exito = true; 
+                exito = true;
             }
         }
         return exito;
     }
 
-    public boolean eliminarVertice(NodoVert origen, NodoVert destino) {
-
+    public boolean eliminarVertice(Object elVertice) {
         boolean exito = false;
 
-        NodoVert elNodo = this.inicio;
-        if (elNodo != null && (origen != null && destino != null)) {
+        if (elVertice == null || this.inicio == null) {
+            exito = false;
+        } else {
 
-            // caso especial cuando se elimina el primer vértice
-            if (elNodo.getElem().equals(origen.getElem())) {
+            NodoVert nodoAEliminar = ubicarVertice(elVertice);
 
-                // Si existe el nodo destino
-                if (ubicarVertice(destino.getElem()) != null) {// Actualizar el inicio y eliminar los arcos del vertice
+            if (nodoAEliminar == null) {
+                exito = false; // El vertice no existe
+            } else {
 
-                    this.inicio = elNodo.getSigVertice();
-                    // Eliminar todos los arcos del vertice
-                    eliminarArco(origen, destino);
-
-                    exito = true;
+                // 1 eliminar todas las referencias hacia el vértice desde otros vértices
+                NodoVert actual = this.inicio;
+                while (actual != null) {
+                    if (!actual.getElem().equals(elVertice)) {
+                        eliminarArco(actual.getElem(), elVertice);
+                    }
+                    actual = actual.getSigVertice();
                 }
 
-            } else {// sino busca al vertice
-
-                elNodo = elNodo.getSigVertice();
-                NodoVert anterior = elNodo;
-
-                while (elNodo != null && !elNodo.getElem().equals(origen)) {
-                    anterior = elNodo;
-                    elNodo = elNodo.getSigVertice();
-                }
-
-                // Si se encuentra el vertice a eliminar
-                if (elNodo != null) {
-                    anterior.setSigVertice(elNodo.getSigVertice()); // El nodo anterior se enlaza con el siguiente del
-                                                                    // Nodo Actual
-
-                    // Eliminar todas los arcos del vertice
-                    eliminarArco(origen, destino);
+                // 2 eliminar el vértice de la lista de vértices
+                if (this.inicio.getElem().equals(elVertice)) {
+                    // Caso especial es el primer vértice
+                    this.inicio = this.inicio.getSigVertice();
                     exito = true;
+                } else {
+                    NodoVert anterior = this.inicio;
+                    NodoVert actualNodo = this.inicio.getSigVertice();
+
+                    while (actualNodo != null && !actualNodo.getElem().equals(elVertice)) {
+                        anterior = actualNodo;
+                        actualNodo = actualNodo.getSigVertice();
+                    }
+
+                    if (actualNodo != null) {
+                        anterior.setSigVertice(actualNodo.getSigVertice());
+                        exito = true;
+                    }
                 }
             }
         }
+
         return exito;
     }
 
-    public boolean eliminarArco(NodoVert origen, NodoVert destino) {
+    /*
+     * public boolean eliminarVertice(NodoVert origen, NodoVert destino) {
+     * 
+     * boolean exito = false;
+     * 
+     * NodoVert elNodo = this.inicio;
+     * if (elNodo != null && (origen != null && destino != null)) {
+     * 
+     * // caso especial cuando se elimina el primer vértice
+     * if (elNodo.getElem().equals(origen.getElem())) {
+     * 
+     * // Si existe el nodo destino
+     * if (ubicarVertice(destino.getElem()) != null) {// Actualizar el inicio y
+     * eliminar los arcos del vertice
+     * 
+     * this.inicio = elNodo.getSigVertice();
+     * // Eliminar todos los arcos del vertice
+     * eliminarArco(origen, destino);
+     * 
+     * exito = true;
+     * }
+     * 
+     * } else {// sino busca al vertice
+     * 
+     * elNodo = elNodo.getSigVertice();
+     * NodoVert anterior = elNodo;
+     * 
+     * while (elNodo != null && !elNodo.getElem().equals(origen)) {
+     * anterior = elNodo;
+     * elNodo = elNodo.getSigVertice();
+     * }
+     * 
+     * // Si se encuentra el vertice a eliminar
+     * if (elNodo != null) {
+     * anterior.setSigVertice(elNodo.getSigVertice()); // El nodo anterior se enlaza
+     * con el siguiente del
+     * // Nodo Actual
+     * 
+     * // Eliminar todas los arcos del vertice
+     * eliminarArco(origen, destino);
+     * exito = true;
+     * }
+     * }
+     * }
+     * return exito;
+     * }
+     */
+
+    public boolean eliminarArco(Object origen, Object destino) {
         boolean exito = false;
 
-        if (existeVertice(origen) && existeVertice(destino)) { // Si existen los vertices
+        NodoVert nodoOrigen = ubicarVertice(origen);
+        NodoVert nodoDestino = ubicarVertice(destino);
 
-            // Buscar el vertice destino en la lista de adyacencia
-            NodoAdy adyacenteActual = origen.getPrimerAdy();
+        if (nodoOrigen != null && nodoDestino != null) { // Si existen los vértices
+            NodoAdy adyacenteActual = nodoOrigen.getPrimerAdy();
             NodoAdy adyacenteAnterior = null;
 
-            while (adyacenteActual != null) {
+            while (adyacenteActual != null && !exito) {
+                if (adyacenteActual.getVertice().equals(nodoDestino)) {
+                    // Se encontró el arco a eliminar
 
-                if (adyacenteActual.getVertice() == destino) {
-                    // Se encontro el arco a eliminar
-
-                    // Caso especial, es el primer adyacente
                     if (adyacenteAnterior == null) {
-                        origen.setPrimerAdy(adyacenteActual.getSigAdyacente()); // Lo enlaza con el siguiente
-
-                    } else {// Esta en el medio o final
-                        adyacenteAnterior.setSigAdyacente(adyacenteActual.getSigAdyacente()); // El enlaza el anterior
-                                                                                              // con el siguiente
+                        // Es el primer adyacente
+                        nodoOrigen.setPrimerAdy(adyacenteActual.getSigAdyacente());
+                    } else {
+                        // Está en el medio o final
+                        adyacenteAnterior.setSigAdyacente(adyacenteActual.getSigAdyacente());
                     }
-                    exito = true;
-                }
 
+                    exito = true;
+                    // Ya se eliminó, sale del while
+                }
                 adyacenteAnterior = adyacenteActual;
                 adyacenteActual = adyacenteActual.getSigAdyacente();
-
             }
         }
+
         return exito;
     }
 
+    /*
+     * public boolean eliminarArco(NodoVert origen, NodoVert destino) {
+     * boolean exito = false;
+     * 
+     * if (existeVertice(origen) && existeVertice(destino)) { // Si existen los
+     * vertices
+     * 
+     * // Buscar el vertice destino en la lista de adyacencia
+     * NodoAdy adyacenteActual = origen.getPrimerAdy();
+     * NodoAdy adyacenteAnterior = null;
+     * 
+     * while (adyacenteActual != null) {
+     * 
+     * if (adyacenteActual.getVertice() == destino) {
+     * // Se encontro el arco a eliminar
+     * 
+     * // Caso especial, es el primer adyacente
+     * if (adyacenteAnterior == null) {
+     * origen.setPrimerAdy(adyacenteActual.getSigAdyacente()); // Lo enlaza con el
+     * siguiente
+     * 
+     * } else {// Esta en el medio o final
+     * adyacenteAnterior.setSigAdyacente(adyacenteActual.getSigAdyacente()); // El
+     * enlaza el anterior
+     * // con el siguiente
+     * }
+     * exito = true;
+     * }
+     * 
+     * adyacenteAnterior = adyacenteActual;
+     * adyacenteActual = adyacenteActual.getSigAdyacente();
+     * 
+     * }
+     * }
+     * return exito;
+     * }
+     */
     public boolean existeCamino(Object origen, Object destino) {
         NodoVert nodoOrigen = ubicarVertice(origen);
         NodoVert nodoDestino = ubicarVertice(destino);
