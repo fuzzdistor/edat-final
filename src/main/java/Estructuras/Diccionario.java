@@ -108,7 +108,7 @@ public class Diccionario {
                 NodoAVLDicc sucesor = obtenerMinimoNodo(nodo.getDerecho());
                 NodoAVLDicc nuevoNodo = new NodoAVLDicc(sucesor.getClave(), sucesor.getDato());
                 nuevoNodo.setIzquierdo(nodo.getIzquierdo());
-                nuevoNodo.setDerecho(eliminar(sucesor.getClave(), nodo.getDerecho(), new boolean[]{false}));
+                nuevoNodo.setDerecho(eliminar(sucesor.getClave(), nodo.getDerecho(), b));
                 nuevoNodo.recalcularAltura(); 
                 nodo = nuevoNodo;
             } else {
