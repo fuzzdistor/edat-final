@@ -4,9 +4,9 @@ package Estructuras;
 public class ArbolAVL {
     private NodoAVL raiz = null;
 
-    public ArbolAVL(){};
+    public ArbolAVL() {
+    }
 
-    
     private NodoAVL balancear(NodoAVL nodo) {
         if (nodo != null) {
             nodo.recalcularAltura();
@@ -55,13 +55,13 @@ public class ArbolAVL {
         hi.recalcularAltura();
         return hi;
     }
-    
+
     private int calcularBalance(NodoAVL nodo) {
-        int alturaIzq = nodo.getIzquierdo() == null? -1: nodo.getIzquierdo().getAltura();
-        int alturaDer = nodo.getDerecho() == null? -1: nodo.getDerecho().getAltura();
+        int alturaIzq = nodo.getIzquierdo() == null ? -1 : nodo.getIzquierdo().getAltura();
+        int alturaDer = nodo.getDerecho() == null ? -1 : nodo.getDerecho().getAltura();
         return alturaIzq - alturaDer;
     }
-    
+
     public void vaciar() {
         raiz = null;
     }
@@ -69,13 +69,13 @@ public class ArbolAVL {
     public boolean vacio() {
         return raiz == null;
     }
-    
+
     public boolean insertar(Comparable elemento) {
-        boolean[] b = { false };
+        boolean[] b = {false};
         raiz = insertar(elemento, raiz, b);
         return b[0];
     }
-    
+
     private NodoAVL insertar(Comparable elemento, NodoAVL nodo, boolean[] b) {
         if (nodo == null) {
             nodo = new NodoAVL(elemento);
@@ -89,35 +89,35 @@ public class ArbolAVL {
             }
         }
 
-        return b[0]? balancear(nodo) : nodo;
+        return b[0] ? balancear(nodo) : nodo;
     }
 
     private NodoAVL eliminar(Comparable elemento, NodoAVL nodo, boolean[] b) {
         if (nodo != null) {
             int comp = nodo.getElem().compareTo(elemento);
             if (comp > 0)
-            nodo.setIzquierdo(eliminar(elemento, nodo.getIzquierdo(), b));
+                nodo.setIzquierdo(eliminar(elemento, nodo.getIzquierdo(), b));
             else if (comp < 0)
-            nodo.setDerecho(eliminar(elemento, nodo.getDerecho(), b));
+                nodo.setDerecho(eliminar(elemento, nodo.getDerecho(), b));
             else if (nodo.getDerecho() != null && nodo.getIzquierdo() != null) {
                 // caso dos hijos
                 nodo.setElem(minimoElemento(nodo.getDerecho()));
                 nodo.setDerecho(eliminar(nodo.getElem(), nodo.getDerecho(), b));
             } else {
                 // caso uno o cero hijos
-                nodo = nodo.getIzquierdo() != null ? nodo.getIzquierdo(): nodo.getDerecho();
+                nodo = nodo.getIzquierdo() != null ? nodo.getIzquierdo() : nodo.getDerecho();
                 b[0] = true;
             }
         }
-        return b[0]? balancear(nodo) : nodo;
+        return b[0] ? balancear(nodo) : nodo;
     }
-    
+
     public boolean eliminar(Comparable elemento) {
-        boolean[] b = { false };
+        boolean[] b = {false};
         raiz = eliminar(elemento, raiz, b);
         return b[0];
     }
-    
+
     private Comparable maximoElemento(NodoAVL nodo) {
         Comparable c = null;
         if (nodo != null) {
@@ -129,11 +129,11 @@ public class ArbolAVL {
         }
         return c;
     }
-    
+
     public Comparable maximoElemento() {
         return maximoElemento(raiz);
     }
-    
+
     private Comparable minimoElemento(NodoAVL nodo) {
         Comparable c = null;
         if (nodo != null) {
@@ -146,8 +146,10 @@ public class ArbolAVL {
         return c;
     }
 
-    public Comparable minimoElemento() { return minimoElemento(raiz); }
-    
+    public Comparable minimoElemento() {
+        return minimoElemento(raiz);
+    }
+
     public boolean pertenece(Comparable elem) {
         return perteneceAux(raiz, elem);
     }
@@ -171,25 +173,25 @@ public class ArbolAVL {
     private String toString(NodoAVL nodo, String s) {
         if (nodo != null) {
             s += '[' + nodo.getElem().toString() + ", ";
-            s += nodo.getIzquierdo() != null? nodo.getIzquierdo().getElem().toString() + ", " : "null, ";
-            s += nodo.getDerecho() != null? nodo.getDerecho().getElem().toString() + "], " : "null],";
-            s+= "\n" ;
+            s += nodo.getIzquierdo() != null ? nodo.getIzquierdo().getElem().toString() + ", " : "null, ";
+            s += nodo.getDerecho() != null ? nodo.getDerecho().getElem().toString() + "], " : "null],";
+            s += "\n";
             s = toString(nodo.getIzquierdo(), s);
             s = toString(nodo.getDerecho(), s);
         }
         return s;
     }
-    
+
     public String toString() {
 
         String s = "[";
         s = toString(raiz, s);
         if (s.length() > 1)
-        s = s.substring(0, s.length() - 1);
+            s = s.substring(0, s.length() - 1);
         return s + ']';
     }
-    
-    public Lista listarRango(Comparable min, Comparable max){
+
+    public Lista listarRango(Comparable min, Comparable max) {
         Lista ls = new Lista();
         if (this.raiz != null && min.compareTo(max) <= 0) {
             listarRangoAux(raiz, min, max, ls);
@@ -197,8 +199,8 @@ public class ArbolAVL {
         return ls;
     }
 
-    private void listarRangoAux(NodoAVL n, Comparable min, Comparable max, Lista ls){
-        int longitud= ls.longitud();
+    private void listarRangoAux(NodoAVL n, Comparable min, Comparable max, Lista ls) {
+        int longitud = ls.longitud();
         if (n != null) {
             Comparable elem = n.getElem();
 
@@ -214,20 +216,21 @@ public class ArbolAVL {
                 listarRangoAux(n.getDerecho(), min, max, ls);
             }
         }
-}
+    }
 
-     public Lista listar(){
+    public Lista listar() {
         Lista ls = new Lista();
         if (raiz != null) {
             listarInOrden(raiz, ls);
         }
         return ls;
     }
-    private void listarInOrden(NodoAVL n, Lista ls){
-        int longitud= ls.longitud();
+
+    private void listarInOrden(NodoAVL n, Lista ls) {
+        int longitud = ls.longitud();
         if (n != null) {
             listarInOrden(n.getIzquierdo(), ls);
-            ls.insertar(n.getElem(), longitud+1);
+            ls.insertar(n.getElem(), longitud + 1);
             listarInOrden(n.getDerecho(), ls);
         }
     }

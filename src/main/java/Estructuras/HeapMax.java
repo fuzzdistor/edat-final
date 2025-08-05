@@ -6,8 +6,8 @@ public class HeapMax {
     private int ultimo;
 
     public HeapMax(int capacidad) {
-        this.TAMANIO=capacidad+1;
-        this.heap = new Comparable[TAMANIO]; 
+        this.TAMANIO = capacidad + 1;
+        this.heap = new Comparable[TAMANIO];
         this.ultimo = 0;
     }
 
@@ -82,9 +82,9 @@ public class HeapMax {
     }
 
     public Comparable recuperarCima() {
-        Comparable resultado=null;
+        Comparable resultado = null;
         if (this.ultimo != 0) {
-            resultado=heap[1];
+            resultado = heap[1];
         }
         return resultado;
     }

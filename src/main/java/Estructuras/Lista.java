@@ -4,12 +4,12 @@ public class Lista {
     private Nodo cabecera;
     private int longitud;
 
-    public Lista(){
-        cabecera=null;
-        longitud=0;
+    public Lista() {
+        cabecera = null;
+        longitud = 0;
     }
 
-       public boolean insertar(Object nuevoElem, int pos) {
+    public boolean insertar(Object nuevoElem, int pos) {
 
         boolean exito = true;
 
@@ -55,9 +55,9 @@ public class Lista {
         }
         return exito;
     }
-    
-    
-    public Object recuperar(int pos){
+
+
+    public Object recuperar(int pos) {
         Object elemento = null;
         Nodo aux = cabecera;
         if (aux != null) {
@@ -73,40 +73,41 @@ public class Lista {
         }
         return elemento;
     }
-    
 
-    public int localizar(Object elem){
 
-        Nodo aux= cabecera;
-        int i=1;
-        int pos=-1;
-        boolean encontrado=false;
-        while(aux!=null &&!encontrado){
-            if(!( aux.getElem().equals(elem))){
+    public int localizar(Object elem) {
+
+        Nodo aux = cabecera;
+        int i = 1;
+        int pos = -1;
+        boolean encontrado = false;
+        while (aux != null && !encontrado) {
+            if (!(aux.getElem().equals(elem))) {
                 i++;
-                aux=aux.getEnlace();
-            }else{
-                pos=i;
-                encontrado=true;
+                aux = aux.getEnlace();
+            } else {
+                pos = i;
+                encontrado = true;
             }
         }
         return pos;
     }
 
-    public void vaciar(){
-        this.cabecera=null;
-        this.longitud=0;
-    }
-    public boolean esVacia(){
-       
-        return cabecera==null;
+    public void vaciar() {
+        this.cabecera = null;
+        this.longitud = 0;
     }
 
-    public int longitud(){
+    public boolean esVacia() {
+
+        return cabecera == null;
+    }
+
+    public int longitud() {
         return longitud;
     }
 
-  
+
     public Lista clone() {
 
         Lista clon = new Lista();
@@ -129,7 +130,7 @@ public class Lista {
         return clon;
     }
 
-     public String toString() {
+    public String toString() {
         String s = "[";
         if (this.cabecera != null) {
 
@@ -145,7 +146,6 @@ public class Lista {
         s += "]";
         return s;
     }
-
 
 
 }

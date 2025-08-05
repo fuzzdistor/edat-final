@@ -143,7 +143,7 @@ public class Grafo {
                 // Insertar nuevo arco etiquetado
                 NodoAdy nuevoArco = new NodoAdy(nodoDestino, nodoOrigen.getPrimerAdy(), etiqueta);
                 nodoOrigen.setPrimerAdy(nuevoArco);
-                exito = true; 
+                exito = true;
             }
         }
         return exito;

@@ -4,7 +4,8 @@ public class Cola {
     private Nodo frente = null;
     private Nodo fin = null;
 
-    public Cola() {}
+    public Cola() {
+    }
 
     public boolean poner(Object elemento) {
         if (frente == null) {

@@ -5,10 +5,9 @@ import java.nio.file.Path;
 import Archivos.CargaArchivos;
 import Estructuras.HeapMax;
 import Estructuras.Lista;
-import TransporteDeAgua.Tuberia;
 
 public class Sistema {
-    
+
     private GestorCiudades gestorCiudades;
     private GestorTuberias gestorTuberias;
 
@@ -19,7 +18,7 @@ public class Sistema {
 
 
     //CARGAS
-    
+
     public void cargarCiudades(String ruta) {
         CargaArchivos.cargarCiudades(Path.of(ruta), gestorCiudades);
     }
@@ -34,10 +33,11 @@ public class Sistema {
 
     //CONSULTAS SOBRE CIUDADES
 
-    public boolean agregarCiudad(String ciudad, double superficie, double consumo, String nomenclatura){
+    public boolean agregarCiudad(String ciudad, double superficie, double consumo, String nomenclatura) {
         return gestorCiudades.agregarCiudad(ciudad, superficie, consumo, nomenclatura);
     }
-    public boolean eliminarCiudad(String unaCiudad){
+
+    public boolean eliminarCiudad(String unaCiudad) {
         // como la ciudad es la que sabe su nomenclatura hay que pedirlo primero del arbol para poder mandarlo al gestor de tuberias
         Ciudad ciudad = gestorCiudades.getCiudad(unaCiudad);
         if (ciudad != null) {
@@ -46,61 +46,62 @@ public class Sistema {
         }
         return ciudad != null;
     }
-    public boolean existeCiudad(String nombre){
+
+    public boolean existeCiudad(String nombre) {
         return gestorCiudades.existeCiudad(nombre);
     }
-    
+
     public double consumoMes(String ciudad, int anio, int mes) {
         return gestorCiudades.getConsumoMes(ciudad, anio, mes);
     }
-    
+
     public double consumoPromedio(String ciudad) {
         return gestorCiudades.getConsumoPromedio(ciudad);
     }
-    
+
     public int habitantes(String ciudad, int anio, int mes) {
         return gestorCiudades.getCantidadHabitantes(ciudad, anio, mes);
     }
-    
+
     public Lista filtrarCiudades(String minNom, String maxNom, double minVol, double maxVol, int anio, int mes) {
         return gestorCiudades.filtrarNombreVolumen(minNom, maxNom, minVol, maxVol, anio, mes);
     }
-    
-    public boolean setCantidadHabitantes(String ciudad, int anio, int mes, int cantidad){
+
+    public boolean setCantidadHabitantes(String ciudad, int anio, int mes, int cantidad) {
         return gestorCiudades.setCantidadHabitantes(ciudad, anio, mes, cantidad);
     }
-    
+
     public void mostrarCiudades() {
         Lista ciudades = gestorCiudades.listarCiudades();
         ciudades.toString();
     }
 
-    public boolean setConsumoPromedio(String unaCiudad, double unConsumo){
-        
+    public boolean setConsumoPromedio(String unaCiudad, double unConsumo) {
+
         return gestorCiudades.setConsumoPromedio(unaCiudad, unConsumo);
     }
 
-    public boolean setCantidadHabitantesAnio(String unaCiudad, int anio, int[]datos){
+    public boolean setCantidadHabitantesAnio(String unaCiudad, int anio, int[] datos) {
 
         return gestorCiudades.setCantidadHabitantesAnio(unaCiudad, anio, datos);
     }
 
     public HeapMax ciudadesOrdenadasPorConsumo(int anio) {
-    Lista listaCiudades = gestorCiudades.listarCiudades(); 
-    HeapMax heap = new HeapMax(listaCiudades.longitud());
+        Lista listaCiudades = gestorCiudades.listarCiudades();
+        HeapMax heap = new HeapMax(listaCiudades.longitud());
 
-    for (int i = 1; i <= listaCiudades.longitud(); i++) {
-        Ciudad ciudad = (Ciudad) listaCiudades.recuperar(i);
-        double consumo = ciudad.getConsumoAnual(anio);
-        heap.insertar(new ConsumoCiudad(ciudad.getNombre(), consumo));
+        for (int i = 1; i <= listaCiudades.longitud(); i++) {
+            Ciudad ciudad = (Ciudad) listaCiudades.recuperar(i);
+            double consumo = ciudad.getConsumoAnual(anio);
+            heap.insertar(new ConsumoCiudad(ciudad.getNombre(), consumo));
+        }
+
+        return heap;
     }
 
-    return heap;
-}
 
-    
     //CONSULTAS SOBRE TUBERIAS
-    public boolean crearTuberia(String fuente, String destino, double caudalMin, double caudalMax, double diametro, String estadoStr){
+    public boolean crearTuberia(String fuente, String destino, double caudalMin, double caudalMax, double diametro, String estadoStr) {
         Tuberia.Estado estado = Tuberia.Estado.valueOf(estadoStr);
         boolean exito = false;
         Ciudad ciudadFuente = gestorCiudades.getCiudad(fuente);
@@ -113,7 +114,7 @@ public class Sistema {
         return exito;
     }
 
-    public boolean eliminarTuberia(String fuente, String destino){
+    public boolean eliminarTuberia(String fuente, String destino) {
         boolean exito = false;
         Ciudad ciudadFuente = gestorCiudades.getCiudad(fuente);
         if (ciudadFuente != null) {
@@ -125,7 +126,7 @@ public class Sistema {
         return exito;
     }
 
-    public boolean cambiarEstadoTuberia(String fuente, String destino, String estadoStr){
+    public boolean cambiarEstadoTuberia(String fuente, String destino, String estadoStr) {
         Tuberia.Estado estado = Tuberia.Estado.valueOf(estadoStr);
         boolean exito = false;
         Ciudad ciudadFuente = gestorCiudades.getCiudad(fuente);
@@ -138,37 +139,37 @@ public class Sistema {
         return exito;
     }
 
-    public String getEstadoCamino(String fuente, String destido){
+    public String getEstadoCamino(String fuente, String destido) {
         return "";
     }
 
-    public String getCaminoMinimo(String fuente, String Destino){
+    public String getCaminoMinimo(String fuente, String Destino) {
         return "";
     }
 
-    public boolean setCaudalMax(String fuente, String destino, double caudal){
-        boolean exito= false;
-        Ciudad fuenteC= gestorCiudades.getCiudad(fuente);
-        Ciudad destinoC= gestorCiudades.getCiudad(destino);
-        if(fuenteC!=null && destinoC!=null){
-            exito= gestorTuberias.setCaudalMax(fuenteC,destinoC,caudal);//falta este metodo en el gestor tuberias
+    public boolean setCaudalMax(String fuente, String destino, double caudal) {
+        boolean exito = false;
+        Ciudad fuenteC = gestorCiudades.getCiudad(fuente);
+        Ciudad destinoC = gestorCiudades.getCiudad(destino);
+        if (fuenteC != null && destinoC != null) {
+            exito = gestorTuberias.setCaudalMax(fuenteC, destinoC, caudal);//falta este metodo en el gestor tuberias
         }
         return exito;
     }
 
-     public boolean setCaudalMin(String fuente, String destino, double caudal){
-        boolean exito= false;
-        Ciudad fuenteC= gestorCiudades.getCiudad(fuente);
-        Ciudad destinoC= gestorCiudades.getCiudad(destino);
-        if(fuenteC!=null && destinoC!=null){
-            exito= gestorTuberias.setCaudalMin(fuenteC,destinoC,caudal);//falta este metodo en el gestor tuberias
+    public boolean setCaudalMin(String fuente, String destino, double caudal) {
+        boolean exito = false;
+        Ciudad fuenteC = gestorCiudades.getCiudad(fuente);
+        Ciudad destinoC = gestorCiudades.getCiudad(destino);
+        if (fuenteC != null && destinoC != null) {
+            exito = gestorTuberias.setCaudalMin(fuenteC, destinoC, caudal);//falta este metodo en el gestor tuberias
         }
-        return exito;    
+        return exito;
     }
 
-    public String mostrarSistema(){
-        String ciudades= "Estructura Ciudades \n"+gestorCiudades.toStringCiudades();
-        String tuberias= "Estructura Tuberias \n"+gestorTuberias.toString();
+    public String mostrarSistema() {
+        String ciudades = "Estructura Ciudades \n" + gestorCiudades.toStringCiudades();
+        String tuberias = "Estructura Tuberias \n" + gestorTuberias.toString();
         return ciudades + "\n" + tuberias;
     }
 }

@@ -16,8 +16,8 @@ public class NodoAVL {
     }
 
     public void recalcularAltura() {
-        altura = Math.max(hijoDerecho == null? -1 : hijoDerecho.altura,
-                hijoIzquierdo == null? -1 : hijoIzquierdo.altura) + 1;
+        altura = Math.max(hijoDerecho == null ? -1 : hijoDerecho.altura,
+                hijoIzquierdo == null ? -1 : hijoIzquierdo.altura) + 1;
     }
 
     public Comparable getElem() {

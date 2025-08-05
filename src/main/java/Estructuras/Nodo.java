@@ -5,31 +5,37 @@ public class Nodo {
     private Nodo enlace;
 
     //constructor
-    public Nodo(Object elemnto){
-        this.elem=elemnto;
-        this.enlace=null;
+    public Nodo(Object elemnto) {
+        this.elem = elemnto;
+        this.enlace = null;
     }
-    public Nodo(Object elem, Nodo enlace){
-        this.elem=elem;
-        this.enlace= enlace;
+
+    public Nodo(Object elem, Nodo enlace) {
+        this.elem = elem;
+        this.enlace = enlace;
     }
+
     //modificadoras
-    public void setElem(Object elem){
-        this.elem=elem;
+    public void setElem(Object elem) {
+        this.elem = elem;
     }
-    public void setEnlace(Nodo enlace){
-        this.enlace=enlace;
+
+    public void setEnlace(Nodo enlace) {
+        this.enlace = enlace;
     }
+
     //observadoras
-    public Object getElem(){
+    public Object getElem() {
         return elem;
     }
-    public Nodo getEnlace(){
+
+    public Nodo getEnlace() {
         return enlace;
     }
-    public boolean equals(Nodo otroNodo){
-        return this.elem==otroNodo.getElem()&& this.enlace==otroNodo.getEnlace();
+
+    public boolean equals(Nodo otroNodo) {
+        return this.elem == otroNodo.getElem() && this.enlace == otroNodo.getEnlace();
 
     }
-    
+
 }

@@ -2,7 +2,6 @@ package TransporteDeAgua;
 
 import Estructuras.Grafo;
 import Estructuras.Lista;
-import Estructuras.Pila;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -67,7 +66,7 @@ public class GestorTuberias {
     }
 
     public boolean crearTuberia(Ciudad fuente, Ciudad destino, double caudalMin, double caudalMax, double diametro, Tuberia.Estado estado) {
-        return crearTuberia(fuente.getNomenclatura(), destino.getNomenclatura(), caudalMin, caudalMin, diametro, estado);
+        return crearTuberia(fuente.getNomenclatura(), destino.getNomenclatura(), caudalMax, caudalMin, diametro, estado);
     }
 
     private boolean setCaudalMax(String fuente, String destino, double caudalMax) {
@@ -146,7 +145,7 @@ public class GestorTuberias {
     public String toString() {
         StringBuilder s = new StringBuilder("Elementos Hash (desordenados): ");
         // hash
-        for (LlaveTuberias llave: tuberias.keySet()) {
+        for (LlaveTuberias llave : tuberias.keySet()) {
             Tuberia tuberia = tuberias.get(llave);
             s.append(String.format("\n%s: %s", llave.toString(), tuberia.toString()));
         }

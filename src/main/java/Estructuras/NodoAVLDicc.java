@@ -16,13 +16,14 @@ public class NodoAVLDicc {
     }
 
     public void recalcularAltura() {
-        altura = Math.max(hijoDerecho == null? -1 : hijoDerecho.altura,
-                hijoIzquierdo == null? -1 : hijoIzquierdo.altura) + 1;
+        altura = Math.max(hijoDerecho == null ? -1 : hijoDerecho.altura,
+                hijoIzquierdo == null ? -1 : hijoIzquierdo.altura) + 1;
     }
 
     public Object getDato() {
         return dato;
     }
+
     public Comparable getClave() {
         return clave;
     }
@@ -47,15 +48,15 @@ public class NodoAVLDicc {
         this.hijoDerecho = hijoDerecho;
     }
 
-    public NodoAVLDicc(Comparable clave,Object dato) {
-        this.clave=clave;
+    public NodoAVLDicc(Comparable clave, Object dato) {
+        this.clave = clave;
         this.dato = dato;
         this.hijoIzquierdo = null;
         this.hijoDerecho = null;
     }
 
     public NodoAVLDicc(Comparable clave, Object dato, NodoAVLDicc hijoIzquierdo, NodoAVLDicc hijoDerecho) {
-        this.clave= clave;
+        this.clave = clave;
         this.dato = dato;
         this.hijoIzquierdo = hijoIzquierdo;
         this.hijoDerecho = hijoDerecho;

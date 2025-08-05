@@ -1,7 +1,5 @@
 package TransporteDeAgua;
 
-import Estructuras.Lista;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,8 +37,8 @@ public class Log {
         escribirEnArchivo(mensaje, Tipo.Modificacion);
     }
 
-    private static void escribirEnArchivo(String mensaje, Tipo tipo){
-        try(BufferedWriter writer = Files.newBufferedWriter(logfilePath, StandardOpenOption.APPEND)) {
+    private static void escribirEnArchivo(String mensaje, Tipo tipo) {
+        try (BufferedWriter writer = Files.newBufferedWriter(logfilePath, StandardOpenOption.APPEND)) {
             writer.newLine();
             String timestamp = new Timestamp(System.currentTimeMillis()).toString();
             writer.write("[%s][%s]: %s".formatted(timestamp, tipo.toString(), mensaje));

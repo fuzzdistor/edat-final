@@ -23,9 +23,9 @@ public class ConsumoCiudad implements Comparable {
         return Double.compare(this.consumo, otraCiudad.consumo);
     }
 
-    
+
     public String toString() {
-        String consumoStr= String.format("%.2f", consumo);
+        String consumoStr = String.format("%.2f", consumo);
         return nombre + " - " + consumoStr + " m3";
     }
 }
