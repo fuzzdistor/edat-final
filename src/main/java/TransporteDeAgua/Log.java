@@ -5,6 +5,7 @@ import Estructuras.Lista;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.sql.Timestamp;
 
 public class Log {
@@ -39,10 +40,10 @@ public class Log {
     }
 
     private static void escribirEnArchivo(String mensaje, Tipo tipo){
-        try(BufferedWriter writer = Files.newBufferedWriter(logfilePath)){
+        try(BufferedWriter writer = Files.newBufferedWriter(logfilePath, StandardOpenOption.APPEND)) {
             writer.newLine();
             String timestamp = new Timestamp(System.currentTimeMillis()).toString();
-            writer.write("[%s]%s:%s".formatted(timestamp, tipo.toString(), mensaje));
+            writer.write("[%s][%s]: %s".formatted(timestamp, tipo.toString(), mensaje));
         } catch (IOException e) {
             System.err.println("Error escribiendo en " + logfilePath.getFileName());
         }

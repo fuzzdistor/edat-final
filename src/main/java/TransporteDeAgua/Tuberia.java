@@ -11,10 +11,10 @@ public class Tuberia {
      * Estado: ACTIVO, EN REPARACIÓN, EN DISEÑO, INACTIVO.
      **/
     public enum Estado {
-        Activo,
-        EnReparacion,
-        EnDisenio,
-        Inactivo
+        ACTIVO,
+        ENREPARACION,
+        ENDISENIO,
+        INACTIVO
     }
 
     private final String nomenclaturaFuente;
@@ -31,10 +31,6 @@ public class Tuberia {
         this.caudalMax = caudalMax;
         this.diametro = diametro;
         this.estado = estado;
-    }
-
-    public String getNomenclatura() {
-        return nomenclaturaFuente + '-' + nomenclaturaDestino;
     }
 
     public String getNomenclaturaFuente() {
@@ -79,12 +75,12 @@ public class Tuberia {
 
     public String toString() {
         return "Tuberia{" +
-                "fuente=" + nomenclaturaFuente +
-                ", destino=" + nomenclaturaDestino +
-                ", caudalMin=" + caudalMin +
-                ", caudalMax=" + caudalMax +
-                ", diametro=" + diametro +
-                ", estado=" + estado +
+                "fuente:" + nomenclaturaFuente +
+                ", destino:" + nomenclaturaDestino +
+                ", caudalMin:" + caudalMin +
+                ", caudalMax:" + caudalMax +
+                ", diametro:" + diametro +
+                ", estado:" + estado +
                 '}';
     }
 }
