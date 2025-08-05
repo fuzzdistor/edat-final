@@ -142,6 +142,21 @@ public class GestorTuberias {
         grafo.eliminarVertice(ciudad.getNomenclatura());
     }
 
+    public Lista menorCaminoEntre(Ciudad origen, Ciudad destino) {
+        // TODO
+        return new Lista();
+    }
+
+    public Lista caminoConMenorPleno(Ciudad origen, Ciudad destino) {
+        // TODO
+        return new Lista();
+    }
+
+    public Tuberia.Estado obtenerEstadoDeCamino(Lista camino) {
+        // TODO
+        return Tuberia.Estado.ENREPARACION;
+    }
+
     public String toString() {
         StringBuilder s = new StringBuilder("Elementos Hash (desordenados): ");
         // hash
