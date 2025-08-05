@@ -142,6 +142,60 @@ public class GrafoTest {
         }
     }
 
+    @Test
+    public void caminosMasCortos() {
+        Grafo grafo = new Grafo();
+        for (int i = 1; i < 10; i++) {
+            assertTrue(grafo.insertarVertice(i));
+        }
 
+        grafo.insertarArco(1, 2, 12);
+        grafo.insertarArco(2, 3, 23);
+        grafo.insertarArco(3, 4, 34);
+        grafo.insertarArco(4, 5, 45);
+        grafo.insertarArco(1, 5, 15);
 
+        assertTrue(grafo.existeCamino(1, 5));
+        Lista camino = grafo.caminoMasCorto(1, 5);
+
+        assertEquals(2, camino.longitud());
+        assertEquals(1, camino.recuperar(1));
+        assertEquals(5, camino.recuperar(2));
+
+        grafo.eliminarArco(1, 5);
+        grafo.insertarArco(2, 5, 25);
+
+        camino = grafo.caminoMasCorto(1, 5);
+
+        assertEquals(3, camino.longitud());
+        assertEquals(1, camino.recuperar(1));
+        assertEquals(2, camino.recuperar(2));
+        assertEquals(5, camino.recuperar(3));
+
+        grafo.eliminarArco(2, 5);
+        camino = grafo.caminoMasCorto(1, 5);
+        assertEquals(5, camino.longitud());
+        assertEquals(1, camino.recuperar(1));
+        assertEquals(2, camino.recuperar(2));
+        assertEquals(3, camino.recuperar(3));
+        assertEquals(4, camino.recuperar(4));
+        assertEquals(5, camino.recuperar(5));
+
+        grafo.insertarArco(2, 4, 24);
+        camino = grafo.caminoMasCorto(1, 5);
+        assertEquals(4, camino.longitud());
+        assertEquals(1, camino.recuperar(1));
+        assertEquals(2, camino.recuperar(2));
+        assertEquals(4, camino.recuperar(3));
+        assertEquals(5, camino.recuperar(4));
+
+        grafo.insertarArco(4, 9, 49);
+        grafo.insertarArco(9, 8, 98);
+        camino = grafo.caminoMasCorto(2, 8);
+        assertEquals(4, camino.longitud());
+        assertEquals(2, camino.recuperar(1));
+        assertEquals(4, camino.recuperar(2));
+        assertEquals(9, camino.recuperar(3));
+        assertEquals(8, camino.recuperar(4));
+    }
 }

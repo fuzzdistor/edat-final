@@ -288,6 +288,44 @@ public class Grafo {
         return grafoClone;
     }
 
+    public Lista caminoMasCorto(Object origen, Object destino) {
+        Lista camino = new Lista();
+        NodoVert vertOrigen = ubicarVertice(origen);
+        if (vertOrigen != null) {
+            NodoVert vertDestino = ubicarVertice(destino);
+            if (vertDestino != null && vertOrigen != vertDestino) {
+                int[] menorLongitud = {Integer.MAX_VALUE};
+                Lista caminoActual = new Lista();
+                int longActual = 0;
+                caminoMasCorto(vertOrigen, vertDestino, caminoActual, longActual, camino, menorLongitud);
+            }
+        }
+        return camino;
+    }
+
+    private void caminoMasCorto(NodoVert actual, NodoVert destino, Lista caminoActual, int longActual, Lista camino, int[] menorLongitud) {
+        longActual += 1;
+        if (longActual < menorLongitud[0]) {
+            caminoActual.insertar(actual.getElem(), 1);
+            if (actual.getElem().equals(destino.getElem())) {
+                camino.vaciar();
+                for (int i = 1; i <= longActual; i++)
+                    // el camino actual está invertido así que esta forma de copiar el camino es la que se requiere
+                    camino.insertar(caminoActual.recuperar(i), 1);
+                menorLongitud[0] = longActual;
+            } else {
+                NodoAdy ady = actual.getPrimerAdy();
+                while (ady != null) {
+                    if (caminoActual.localizar(ady.getVertice().getElem()) == -1) {
+                        caminoMasCorto(ady.getVertice(), destino, caminoActual, longActual, camino, menorLongitud);
+                    }
+                    ady = ady.getSigAdyacente();
+                }
+            }
+            caminoActual.eliminar(1);
+        }
+    }
+
     public String toString() {
         StringBuilder s = new StringBuilder();
         NodoVert nodo = inicio;
