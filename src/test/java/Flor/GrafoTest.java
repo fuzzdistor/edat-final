@@ -89,11 +89,11 @@ public class GrafoTest {
         grafo.insertarArco("C", "A", "CA");
         grafo.insertarArco("B", "D", "BD");
 
-        boolean existe = grafo.existeCamino("A", "D");
-        assertEquals(existe, true);
-        existe = grafo.existeCamino("C", "A");
-        assertEquals(existe, false);
-
+        assertTrue(grafo.existeCamino("A", "D"));
+        assertFalse(grafo.existeCamino("D", "A"));
+        assertTrue(grafo.existeCamino("A", "C"));
+        assertTrue(grafo.existeCamino("C", "A"));
+        assertFalse(grafo.existeCamino("B", "A"));
     }
 
 }

@@ -1,7 +1,4 @@
-package org.example;
-
-import TransporteDeAgua.InterfazDeUsuario;
-import TransporteDeAgua.Sistema;
+package TransporteDeAgua;
 
 public class Main {
     public static void main(String[] args) {

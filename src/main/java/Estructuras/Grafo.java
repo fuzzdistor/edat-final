@@ -6,7 +6,7 @@ public class Grafo {
 
     public Grafo() {
         inicio = null;
-    };// constructor vacio
+    }// constructor vacio
 
     public boolean insertarVertice(Object nuevoVertice) {
         boolean exito = false;
@@ -171,9 +171,7 @@ public class Grafo {
             }
             // recorro todos los vértices limpiando arcos que tengan a vertice como destino
             for (NodoVert inodo = this.inicio; inodo != null; inodo = inodo.getSigVertice()) {
-                System.out.println(inodo.getElem());
-                System.out.println(vertice.getElem());
-                System.out.println(eliminarArcoVert(inodo, vertice));
+                eliminarArcoVert(inodo, vertice);
             }
 
             exito = true;
