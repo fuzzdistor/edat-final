@@ -169,8 +169,7 @@ public class GestorTuberias {
     }
 
     public Lista menorCaminoEntre(Ciudad origen, Ciudad destino) {
-        // TODO
-        return new Lista();
+        return grafo.caminoMasCorto(origen.getNomenclatura(), destino.getNomenclatura());
     }
 
     public Lista caminoConMenorPleno(Ciudad origen, Ciudad destino) {
@@ -178,9 +177,26 @@ public class GestorTuberias {
         return new Lista();
     }
 
-    public Tuberia.Estado obtenerEstadoDeCamino(Lista camino) {
-        // TODO
-        return Tuberia.Estado.ENREPARACION;
+    /// Se asume que el camino es válido, ordenado y que contiene al menos dos ciudades
+    public Estado obtenerEstadoDeCamino(Lista camino) {
+        int longitud = camino.longitud();
+        Estado estado = Estado.ACTIVO;
+        int indiceActual = 2;
+        while (estado != Estado.ENDISENIO && indiceActual <= longitud) {
+            Ciudad anterior = (Ciudad) camino.recuperar(indiceActual - 1);
+            Ciudad actual = (Ciudad) camino.recuperar(indiceActual);
+            LlaveTuberias llave = new LlaveTuberias(anterior.getNomenclatura(), actual.getNomenclatura());
+            Tuberia.Estado estadoTrecho = tuberias.get(llave).getEstado();
+
+            if (estadoTrecho == Estado.ENDISENIO)
+                estado = Estado.ENDISENIO;
+            else if (estadoTrecho == Estado.INACTIVO)
+                estado = Estado.INACTIVO;
+            else if (estadoTrecho == Estado.ENREPARACION)
+                if (estado == Estado.ACTIVO)
+                        estado = Estado.ENREPARACION;
+        }
+        return estado;
     }
 
     public String toString() {
