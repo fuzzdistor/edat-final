@@ -13,12 +13,25 @@ public class GestorCiudades {
     public boolean agregarCiudad(String nombre, double superficie, double consumo, String nomenclatura) {
         String norm = nombre.toUpperCase();
         Ciudad nuevaCiudad = new Ciudad(norm, superficie, consumo, nomenclatura);
-        return ciudades.insertar(norm, nuevaCiudad);
+        boolean exito=ciudades.insertar(norm, nuevaCiudad);
+        if(exito){
+            Log.alta("Ciudad %s agregada (superficie: %.2f, consumo: %.2f, código: %s)".formatted(
+            norm, superficie, consumo, nomenclatura));
+        }else{
+            Log.error("Error al agregar ciudad %s: ya existe".formatted(norm));
+        }
+        return exito;
     }
 
     public boolean eliminarCiudad(String unaCiudad) {
-
-        return ciudades.eliminar(unaCiudad.toUpperCase());
+        String norm=unaCiudad.toUpperCase();
+        boolean exito=ciudades.eliminar(norm);
+        if(exito){
+            Log.baja("Ciudad %s eliminada".formatted(norm));
+        }else{
+            Log.error("Error en eliminacion de ciudad: %s".formatted(norm));
+        }
+        return exito;
     }
 
     public Ciudad getCiudad(String nombreCiudad) {
@@ -77,10 +90,14 @@ public class GestorCiudades {
 
     public boolean setConsumoPromedio(String unaCiudad, double unConsumo) {
         boolean exito = false;
-        Ciudad ciudad = (Ciudad) ciudades.recuperar(unaCiudad.toUpperCase());
+        String norm= unaCiudad.toUpperCase();
+        Ciudad ciudad = (Ciudad) ciudades.recuperar(norm);
         if (ciudad != null) {
             ciudad.setConsumoPromedio(unConsumo);
             exito = true;
+            Log.modificacion("Ciudad %s: consumo promedio actualizado a %.2f L".formatted(norm, unConsumo));
+        } else {
+            Log.error("Error al modificar consumo: ciudad %s no encontrada".formatted(norm));
         }
         return exito;
     }
@@ -103,8 +120,17 @@ public class GestorCiudades {
 
 
     public boolean setCantidadHabitantes(String unaCiudad, int anio, int mes, int cantidad) {
-        Ciudad tem = (Ciudad) ciudades.recuperar(unaCiudad.toUpperCase());
-        return (tem != null) && tem.setHabitantes(anio, mes, cantidad);
+        String norm= unaCiudad.toUpperCase();
+        Ciudad tem = (Ciudad) ciudades.recuperar(norm);
+        boolean exito= false;
+        if (tem != null) {
+            tem.setHabitantes(anio, mes, cantidad);
+            exito = true;
+            Log.modificacion("Ciudad %s: habitantes actualizados a %d para %02d/%d".formatted(norm, cantidad, mes, anio));
+        } else {
+            Log.error("Error al modificar cantidad de habitantes: ciudad %s no encontrada".formatted(norm));
+        }
+        return  exito;
     }
 
     public boolean setCantidadHabitantesAnio(String unaCiudad, int anio, int[] datos) {
@@ -112,7 +138,7 @@ public class GestorCiudades {
         Ciudad tem = (Ciudad) ciudades.recuperar(unaCiudad.toUpperCase());
         if (tem != null && datos.length == 12) {
             tem.setHabitantesAnio(anio, datos);
-            exito = true;
+            exito = true;    
         }
         return exito;
     }
