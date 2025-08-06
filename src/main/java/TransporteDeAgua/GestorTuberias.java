@@ -3,6 +3,8 @@ package TransporteDeAgua;
 import Estructuras.Grafo;
 import Estructuras.Lista;
 
+import TransporteDeAgua.Tuberia.Estado;
+
 import java.util.HashMap;
 import java.util.Objects;
 

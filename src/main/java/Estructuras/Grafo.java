@@ -326,6 +326,26 @@ public class Grafo {
         }
     }
 
+    public Lista caminoConMenorEtiqueta(Object origen, Object destino) {
+        Lista[] camino = { new Lista() };
+        NodoVert vertOrigen = ubicarVertice(origen);
+        if (vertOrigen != null) {
+            NodoVert vertDestino = ubicarVertice(destino);
+            if (vertDestino != null && vertOrigen != vertDestino) {
+                double[] menorEtiqueta = { Double.MAX_VALUE };
+                double[] menorEtiquetaActual = { Double.MAX_VALUE };
+                caminoConMenorEtiqueta(vertOrigen, vertDestino, camino, new Lista(), menorEtiqueta, menorEtiquetaActual);
+            }
+        }
+        return camino;
+    }
+
+    private void caminoConMenorEtiqueta(NodoVert nodoActual, NodoVert destino, Lista[] camino, Lista caminoActual, double[] menorEtiqueta) {
+
+
+
+    }
+
     public String toString() {
         StringBuilder s = new StringBuilder();
         NodoVert nodo = inicio;
