@@ -9,7 +9,7 @@ public class Prueba {
 
         // 
         int[] claves = {
-           50, 30, 70, 20, 40, 60, 80, 35, 45};
+                30, 20, 15, 24, 12, 18, 19, 22, 23, 27, 50, 35, 33, 40, 37, 100, 90, 75, 95, 93, 105, 190 };
 
         for (int clave : claves) {
             arbol.insertar(clave, "Dato" + clave);

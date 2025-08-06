@@ -307,12 +307,17 @@ public class Grafo {
         longActual += 1;
         if (longActual < menorLongitud[0]) {
             caminoActual.insertar(actual.getElem(), 1);
+            System.out.println("Inserción en camino");
+            System.out.println(caminoActual.toString());
             if (actual.getElem().equals(destino.getElem())) {
                 camino.vaciar();
                 for (int i = 1; i <= longActual; i++)
                     // el camino actual está invertido así que esta forma de copiar el camino es la que se requiere
                     camino.insertar(caminoActual.recuperar(i), 1);
+
                 menorLongitud[0] = longActual;
+                System.out.println("Se hizo un copiado de camino");
+                System.out.println(camino.toString());
             } else {
                 NodoAdy ady = actual.getPrimerAdy();
                 while (ady != null) {
