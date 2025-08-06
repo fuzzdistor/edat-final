@@ -175,8 +175,7 @@ public class GestorTuberias {
     }
 
     public Lista caminoConMenorPleno(Ciudad origen, Ciudad destino) {
-        // TODO
-        return new Lista();
+        return grafo.caminoConMenorEtiqueta(origen.getNomenclatura(), destino.getNomenclatura());
     }
 
     /// Se asume que el camino es válido, ordenado y que contiene al menos dos ciudades
