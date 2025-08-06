@@ -105,7 +105,7 @@ public class GestorCiudades {
 
     public Lista filtrarNombreVolumen(String minNom, String maxNom, double minVol, double maxVol, int anio, int mes) {
 
-        Lista filtroNombre = ciudades.listarRangoDatos(minNom.toUpperCase(), maxNom.toUpperCase());
+        Lista filtroNombre = ciudades.listarRangoClaves(minNom.toUpperCase(), maxNom.toUpperCase());
         Lista filtroTotal = new Lista();
         for (int i = 1; i <= filtroNombre.longitud(); i++) {
             String ciudad = ((Ciudad) filtroNombre.recuperar(i)).getNombre();
