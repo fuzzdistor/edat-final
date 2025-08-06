@@ -174,7 +174,7 @@ public class InterfazDeUsuario {
             switch (respuesta) {
                 case "1":
                     // dada la ciudad A y B dar el camino con el minimo caudal que haya
-                    minimoCaudal();
+                   caminoConMenorPleno();
                     break;
                 case "2":
                     // dada la ciudad A y B dar el camino con la minima cantidad de ciudades
@@ -535,15 +535,20 @@ public class InterfazDeUsuario {
 
     //CONSULTAS SOBRE TRANSPORTE DE AGUA
 
-    private void minimoCaudal() {
+    private void caminoConMenorPleno() {
         System.out.print("Ingrese nombre de la ciudad fuente: ");
         String fuente = sc.nextLine().toUpperCase();
         System.out.print("Ingrese nombre de la ciudad destino: ");
         String destino = sc.nextLine().toUpperCase();
-
-        String resultado = sistema.getCaminoMinimo(fuente, destino);
-
-        System.out.println(resultado);
+        Lista resultado = sistema.caminoConMenorPleno(fuente, destino);
+        String estado= sistema.obtenerEstadoCamino(resultado);
+        if(estado.equals("INEXISTENTE")){
+            System.out.println("No hay un camino entre las ciudades dadas");
+        }else{
+            System.out.println("Camino: ");
+            System.out.println(resultado.toString());
+            System.out.println("Estado: "+estado);
+        }
     }
 
 
@@ -552,8 +557,15 @@ public class InterfazDeUsuario {
         String fuente = sc.nextLine().toUpperCase();
         System.out.print("Ingrese nombre de la ciudad destino: ");
         String destino = sc.nextLine().toUpperCase();
-        String menorCamino = sistema.getCaminoMinimo(fuente, destino);
-        System.out.println(menorCamino);
+        Lista camino= sistema.menorCaminoEntre(fuente, destino);
+        String estado= sistema.obtenerEstadoCamino(camino);
+        if(estado.equals("INEXISTENTE")){
+            System.out.println("No hay un camino entre las ciudades dadas");
+        }else{
+            System.out.println("Camino: ");
+            System.out.println(camino.toString());
+            System.out.println("Estado: "+estado);
+        }
     }
 
     //CONSULTAS SOBRE SISTEMA
