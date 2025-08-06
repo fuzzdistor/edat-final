@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import Estructuras.*;
+import TransporteDeAgua.Log;
 
 
 public class AdminArchivos {
@@ -22,11 +23,17 @@ public class AdminArchivos {
                     longitud++;
                 }
             }
+
+        Log.info("Archivo leido exitosamente: %s. Lineas validas: %d"
+        .formatted(archivoPath.getFileName(), longitud));
+
         } catch (FileNotFoundException ex) {
             System.err.println(ex.getMessage() + "\nEl archivo del "
                     + "que queriamos leer no existe.");
+            Log.error("Archivo no encontrado: " + archivoPath.getFileName());
         } catch (IOException ex) {
-            System.err.println("Error leyendo o escribiendo en " + archivoPath.getFileName());
+            System.err.println("Error leyendo en " + archivoPath.getFileName());
+            Log.error("Error leyendo archivo: " + archivoPath.getFileName());
         }
 
         return lineas;

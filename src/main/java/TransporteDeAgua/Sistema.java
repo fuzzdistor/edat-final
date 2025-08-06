@@ -21,6 +21,7 @@ public class Sistema {
 
     public void cargarCiudades(String ruta) {
         CargaArchivos.cargarCiudades(Path.of(ruta), gestorCiudades);
+        
     }
 
     public void cargarTuberias(String ruta) {
@@ -139,12 +140,38 @@ public class Sistema {
         return exito;
     }
 
-    public String getEstadoCamino(String fuente, String destido) {
-        return "";
+    public Lista menorCaminoEntre(String fuente, String destino) {
+        Lista camino= new Lista();
+
+        Ciudad ciudadFuente = gestorCiudades.getCiudad(fuente);
+        if (ciudadFuente != null) {
+            Ciudad ciudadDestino = gestorCiudades.getCiudad(destino);
+            if (ciudadDestino != null) {
+                camino= gestorTuberias.menorCaminoEntre(ciudadFuente, ciudadDestino);
+            }
+        }
+        return camino;
+    }
+     public Lista caminoConMenorPleno(String fuente, String destino) {
+        Lista camino= new Lista();
+
+        Ciudad ciudadFuente = gestorCiudades.getCiudad(fuente);
+        if (ciudadFuente != null) {
+            Ciudad ciudadDestino = gestorCiudades.getCiudad(destino);
+            if (ciudadDestino != null) {
+                camino= gestorTuberias.caminoConMenorPleno(ciudadFuente, ciudadDestino);
+            }
+        }
+        return camino;
     }
 
-    public String getCaminoMinimo(String fuente, String Destino) {
-        return "";
+    public String obtenerEstadoCamino(Lista camino) {
+        String estado="INEXISTENTE";
+        if(camino.longitud()>2){
+            estado=obtenerEstadoCamino(camino);
+
+        }
+        return estado;
     }
 
     public boolean setCaudalMax(String fuente, String destino, double caudal) {

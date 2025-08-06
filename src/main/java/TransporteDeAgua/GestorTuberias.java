@@ -61,22 +61,33 @@ public class GestorTuberias {
             grafo.insertarVertice(nomenclaturaFuente);
             grafo.insertarVertice(nomenclaturaDestino);
             grafo.insertarArco(nomenclaturaFuente, nomenclaturaDestino, caudalMax);
+            Log.alta("Tuberia creada: %s -> %s (caudalMin: %.2f, caudalMax: %.2f, diametro: %.2f, estado: %s)"
+            .formatted(nomenclaturaFuente, nomenclaturaDestino, caudalMin, caudalMax, diametro, estado));
+        } else {
+            Log.error("Error al crear tuberia: %s -> %s".formatted(nomenclaturaFuente, nomenclaturaDestino));
         }
         return !existe;
     }
 
     public boolean crearTuberia(Ciudad fuente, Ciudad destino, double caudalMin, double caudalMax, double diametro, Tuberia.Estado estado) {
-        return crearTuberia(fuente.getNomenclatura(), destino.getNomenclatura(), caudalMax, caudalMin, diametro, estado);
+        return crearTuberia(fuente.getNomenclatura(), destino.getNomenclatura(), caudalMin, caudalMax, diametro, estado);
     }
 
     private boolean setCaudalMax(String fuente, String destino, double caudalMax) {
         Tuberia tuberia = getTuberia(fuente, destino);
+        boolean exito = false;
         if (tuberia != null) {
             tuberia.setCaudalMax(caudalMax);
             grafo.eliminarArco(fuente, destino);
             grafo.insertarArco(fuente, destino, caudalMax);
+            exito=true;
+            Log.modificacion("Tuberia %s -> %s: caudal maximo modificado a %.2f"
+            .formatted(fuente, destino, caudalMax));
+        }else{
+            Log.error("Error al modificar caudal maximo: tuberia %s -> %s"
+            .formatted(fuente, destino));
         }
-        return tuberia != null;
+        return exito;
     }
 
     public boolean setCaudalMax(Ciudad fuente, Ciudad destino, double caudalMax) {
@@ -88,6 +99,12 @@ public class GestorTuberias {
         Tuberia tuberia = getTuberia(fuente, destino);
         if (tuberia != null) {
             tuberia.setCaudalMin(caudalMin);
+            Log.modificacion("Tuberia %s -> %s: caudal minimo modificado a %.2f"
+            .formatted(fuente, destino, caudalMin));
+
+        }else{
+            Log.error("Error al modificar caudal minimo: tuberia %s -> %s"
+            .formatted(fuente, destino));
         }
         return tuberia != null;
     }
@@ -109,6 +126,9 @@ public class GestorTuberias {
         if (existe) {
             tuberias.remove(llave);
             grafo.eliminarArco(llave.nomenclaturaFuente, llave.nomenclaturaDestino);
+            Log.baja("Tubería de %s a %s eliminada".formatted(llave.nomenclaturaFuente, llave.nomenclaturaDestino));
+        }else{
+            Log.error("Error en eliminacion de tuberia de %s a %s".formatted(llave.nomenclaturaFuente, llave.nomenclaturaDestino));
         }
         return existe;
     }
@@ -129,6 +149,11 @@ public class GestorTuberias {
         Tuberia tuberia = getTuberia(fuente, destino);
         if (tuberia != null) {
             tuberia.setEstado(estado);
+            Log.modificacion("Estado de la tuberia de %s -> %s modificado a %s"
+            .formatted(fuente.getNomenclatura(), destino.getNomenclatura(), estado));
+        }else{
+            Log.info("No se pudo modificar el estado: tuberia de %s -> %s "
+            .formatted(fuente.getNomenclatura(), destino.getNomenclatura()));
         }
         return tuberia != null;
     }
@@ -140,6 +165,7 @@ public class GestorTuberias {
         tuberias.keySet().removeIf((LlaveTuberias llave) -> llave.contieneNomenclatura(nomenclatura));
 
         grafo.eliminarVertice(ciudad.getNomenclatura());
+        Log.baja("Eliminadas todas las tuberias asociadas a la ciudad %s".formatted(nomenclatura));
     }
 
     public Lista menorCaminoEntre(Ciudad origen, Ciudad destino) {
