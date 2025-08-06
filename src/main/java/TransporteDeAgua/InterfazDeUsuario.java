@@ -11,9 +11,7 @@ public class InterfazDeUsuario {
 
     public InterfazDeUsuario(Sistema sistema) {// constructor
         this.sistema = sistema;
-    }
-
-    ;
+    };
 
 
     //MENUS
@@ -61,7 +59,6 @@ public class InterfazDeUsuario {
             System.out.println("| 5. Listar ciudades que han consumido un volumen de agua en un rango en un mes de un año");
             System.out.println("| 6. Listar ciudades por consumo de agua en un año de mayor a menor");
             System.out.println("| 7. Ir al menu principal");
-            System.out.println("| x. Salir");
 
             String respuesta = sc.nextLine();
 
@@ -94,6 +91,7 @@ public class InterfazDeUsuario {
                     break;
 
                 default:
+                    volver=true;
                     break;
 
             }
