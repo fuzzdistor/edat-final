@@ -38,7 +38,7 @@ public class Log {
     }
 
     private static void escribirEnArchivo(String mensaje, Tipo tipo) {
-        try (BufferedWriter writer = Files.newBufferedWriter(logfilePath, StandardOpenOption.APPEND)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(logfilePath,StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
             writer.newLine();
             String timestamp = new Timestamp(System.currentTimeMillis()).toString();
             writer.write("[%s][%s]: %s".formatted(timestamp, tipo.toString(), mensaje));
