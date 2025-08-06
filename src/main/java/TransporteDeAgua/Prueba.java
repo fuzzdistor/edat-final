@@ -1,14 +1,28 @@
 package TransporteDeAgua;
 
+import Estructuras.Diccionario;
+
 public class Prueba {
     public static void main(String[] args) {
-        Sistema sistema = new Sistema();
 
-        sistema.cargarCiudades("src\\main\\java\\Archivos\\Ciudades.csv");
-        sistema.cargarHabitantes("src\\main\\java\\Archivos\\Habitantes.csv");
-        sistema.cargarTuberias("src\\main\\java\\Archivos\\Tuberias.csv");
+         Diccionario arbol = new Diccionario();
 
-        InterfazDeUsuario interfaz = new InterfazDeUsuario(sistema);
-        interfaz.iniciar();
+        // 
+        int[] claves = {
+           50, 30, 70, 20, 40, 60, 80, 35, 45};
+
+        for (int clave : claves) {
+            arbol.insertar(clave, "Dato" + clave);
+        }
+
+        System.out.println("Arbol antes de eliminar 30:");
+        System.out.println(arbol.toStringClaves());
+
+        // Eliminar la raiz (30) que tiene dos hijos
+        arbol.eliminar(30);
+
+        System.out.println("Arbol después de eliminar 30:");
+        System.out.println(arbol.toStringClaves());
     }
+        
 }
