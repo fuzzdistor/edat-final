@@ -184,9 +184,10 @@ public class GestorTuberias {
         Estado estado = Estado.ACTIVO;
         int indiceActual = 2;
         while (estado != Estado.ENDISENIO && indiceActual <= longitud) {
-            Ciudad anterior = (Ciudad) camino.recuperar(indiceActual - 1);
-            Ciudad actual = (Ciudad) camino.recuperar(indiceActual);
-            LlaveTuberias llave = new LlaveTuberias(anterior.getNomenclatura(), actual.getNomenclatura());
+            String anterior = (String) camino.recuperar(indiceActual - 1);
+            String actual = (String) camino.recuperar(indiceActual);
+            indiceActual += 1;
+            LlaveTuberias llave = new LlaveTuberias(anterior, actual);
             Tuberia.Estado estadoTrecho = tuberias.get(llave).getEstado();
 
             if (estadoTrecho == Estado.ENDISENIO)

@@ -160,18 +160,33 @@ public class Sistema {
             Ciudad ciudadDestino = gestorCiudades.getCiudad(destino);
             if (ciudadDestino != null) {
                 camino= gestorTuberias.caminoConMenorPleno(ciudadFuente, ciudadDestino);
+                System.out.println(camino);
             }
         }
         return camino;
     }
 
     public String obtenerEstadoCamino(Lista camino) {
-        String estado="INEXISTENTE";
+        Tuberia.Estado estado;
+        String estadoString = "INEXISTENTE";
         if(camino.longitud()>2){
-            estado=obtenerEstadoCamino(camino);
-
+            estado = gestorTuberias.obtenerEstadoDeCamino(camino);
+            switch (estado) {
+                case ACTIVO -> {
+                    estadoString = "Activo";
+                }
+                case ENREPARACION -> {
+                    estadoString = "En Reparacion";
+                }
+                case ENDISENIO -> {
+                    estadoString = "En Diseño";
+                }
+                case INACTIVO -> {
+                    estadoString = "Inactivo";
+                }
+            }
         }
-        return estado;
+        return estadoString;
     }
 
     public boolean setCaudalMax(String fuente, String destino, double caudal) {

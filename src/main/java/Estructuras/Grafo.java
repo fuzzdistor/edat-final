@@ -289,7 +289,7 @@ public class Grafo {
     }
 
     public Lista caminoMasCorto(Object origen, Object destino) {
-        Lista camino = new Lista();
+        Lista[] camino = { new Lista() };
         NodoVert vertOrigen = ubicarVertice(origen);
         if (vertOrigen != null) {
             NodoVert vertDestino = ubicarVertice(destino);
@@ -300,24 +300,21 @@ public class Grafo {
                 caminoMasCorto(vertOrigen, vertDestino, caminoActual, longActual, camino, menorLongitud);
             }
         }
-        return camino;
+        Lista rev = new Lista();
+        while (!camino[0].esVacia()) {
+            rev.insertar(camino[0].recuperar(1), 1);
+            camino[0].eliminar(1);
+        }
+        return rev;
     }
 
-    private void caminoMasCorto(NodoVert actual, NodoVert destino, Lista caminoActual, int longActual, Lista camino, int[] menorLongitud) {
+    private void caminoMasCorto(NodoVert actual, NodoVert destino, Lista caminoActual, int longActual, Lista[] camino, int[] menorLongitud) {
         longActual += 1;
         if (longActual < menorLongitud[0]) {
             caminoActual.insertar(actual.getElem(), 1);
-            System.out.println("Inserción en camino");
-            System.out.println(caminoActual.toString());
             if (actual.getElem().equals(destino.getElem())) {
-                camino.vaciar();
-                for (int i = 1; i <= longActual; i++)
-                    // el camino actual está invertido así que esta forma de copiar el camino es la que se requiere
-                    camino.insertar(caminoActual.recuperar(i), 1);
-
+                camino[0] = caminoActual.clone();
                 menorLongitud[0] = longActual;
-                System.out.println("Se hizo un copiado de camino");
-                System.out.println(camino.toString());
             } else {
                 NodoAdy ady = actual.getPrimerAdy();
                 while (ady != null) {
@@ -332,7 +329,7 @@ public class Grafo {
     }
 
     public Lista caminoConMenorEtiqueta(Object origen, Object destino) {
-        Lista camino = new Lista();
+        Lista[] camino = { new Lista() };
         NodoVert vertOrigen = ubicarVertice(origen);
         if (vertOrigen != null) {
             NodoVert vertDestino = ubicarVertice(destino);
@@ -342,18 +339,21 @@ public class Grafo {
                 caminoConMenorEtiqueta(vertOrigen, vertDestino, camino, 0, new Lista(), menorEtiqueta, menorEtiquetaActual);
             }
         }
-        return camino;
+        Lista rev = new Lista();
+        while (!camino[0].esVacia()) {
+            rev.insertar(camino[0].recuperar(1), 1);
+            camino[0].eliminar(1);
+        }
+
+        return rev;
     }
 
-    private void caminoConMenorEtiqueta(NodoVert actual, NodoVert destino, Lista camino, int longActual, Lista caminoActual, double[] menorEtiqueta, double menorEtiquetaActual) {
+    private void caminoConMenorEtiqueta(NodoVert actual, NodoVert destino, Lista[] camino, int longActual, Lista caminoActual, double[] menorEtiqueta, double menorEtiquetaActual) {
         longActual += 1;
         caminoActual.insertar(actual.getElem(), 1);
         if (actual.getElem().equals(destino.getElem())) {
             if (menorEtiquetaActual < menorEtiqueta[0]) {
-                camino.vaciar();
-                for (int i = 1; i <= longActual; i++)
-                    // el camino actual está invertido así que esta forma de copiar el camino es la que se requiere
-                    camino.insertar(caminoActual.recuperar(i), 1);
+                camino[0] = caminoActual.clone();
                 menorEtiqueta[0] = menorEtiquetaActual;
             }
         } else {
@@ -361,7 +361,7 @@ public class Grafo {
             while (ady != null) {
                 if (caminoActual.localizar(ady.getVertice().getElem()) == -1) {
                     double etiqueta = (double) ady.getEtiqueta();
-                    caminoConMenorEtiqueta(ady.getVertice(), destino, caminoActual, longActual, camino, menorEtiqueta, Math.min(etiqueta, menorEtiquetaActual));
+                    caminoConMenorEtiqueta(ady.getVertice(), destino, camino, longActual, caminoActual, menorEtiqueta, Math.min(etiqueta, menorEtiquetaActual));
                 }
                 ady = ady.getSigAdyacente();
             }

@@ -538,13 +538,20 @@ public class InterfazDeUsuario {
         String fuente = sc.nextLine().toUpperCase();
         System.out.print("Ingrese nombre de la ciudad destino: ");
         String destino = sc.nextLine().toUpperCase();
-        Lista resultado = sistema.caminoConMenorPleno(fuente, destino);
-        String estado= sistema.obtenerEstadoCamino(resultado);
+        Lista camino = sistema.caminoConMenorPleno(fuente, destino);
+        escribirCamino(camino);
+    }
+
+    private void escribirCamino(Lista camino) {
+        String estado= sistema.obtenerEstadoCamino(camino);
         if(estado.equals("INEXISTENTE")){
             System.out.println("No hay un camino entre las ciudades dadas");
-        }else{
-            System.out.println("Camino: ");
-            System.out.println(resultado.toString());
+        } else {
+            System.out.println("Camino por nomenclaturas: ");
+            int longitud = camino.longitud();
+            for (int i = 1; i <= longitud; i++) {
+                System.out.printf("%d: %s\n", i, camino.recuperar(i));
+            }
             System.out.println("Estado: "+estado);
         }
     }
@@ -556,14 +563,7 @@ public class InterfazDeUsuario {
         System.out.print("Ingrese nombre de la ciudad destino: ");
         String destino = sc.nextLine().toUpperCase();
         Lista camino= sistema.menorCaminoEntre(fuente, destino);
-        String estado= sistema.obtenerEstadoCamino(camino);
-        if(estado.equals("INEXISTENTE")){
-            System.out.println("No hay un camino entre las ciudades dadas");
-        }else{
-            System.out.println("Camino: ");
-            System.out.println(camino.toString());
-            System.out.println("Estado: "+estado);
-        }
+        escribirCamino(camino);
     }
 
     //CONSULTAS SOBRE SISTEMA

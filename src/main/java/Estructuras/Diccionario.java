@@ -86,8 +86,6 @@ public class Diccionario {
                 nodo.setDerecho(insertar(elemento, dato, nodo.getDerecho(), b));
             } else if (res > 0) {
                 nodo.setIzquierdo(insertar(elemento, dato, nodo.getIzquierdo(), b));
-            } else {
-                b[0] = false;
             }
         }
 
@@ -101,20 +99,16 @@ public class Diccionario {
                 nodo.setIzquierdo(eliminar(elemento, nodo.getIzquierdo(), b));
             else if (comp < 0)
                 nodo.setDerecho(eliminar(elemento, nodo.getDerecho(), b));
-            else {
+            else if (nodo.getDerecho() != null && nodo.getIzquierdo() != null){
+                // caso dos hijos
+                NodoAVLDicc sucesor = obtenerMinimoNodo(nodo.getDerecho());
+                nodo.setClave(sucesor.getClave());
+                nodo.setDato(sucesor.getDato());
+                nodo.setDerecho(eliminar(nodo.getClave(), nodo.getDerecho(), b));
+            } else {
+                // uno o cero hijos
+                nodo = (nodo.getIzquierdo() != null) ? nodo.getIzquierdo() : nodo.getDerecho();
                 b[0] = true;
-                if (nodo.getIzquierdo() != null && nodo.getDerecho() != null) {
-                    //  buscar sucesor
-                    NodoAVLDicc sucesor = obtenerMinimoNodo(nodo.getDerecho());
-                    NodoAVLDicc nuevoNodo = new NodoAVLDicc(sucesor.getClave(), sucesor.getDato());
-                    nuevoNodo.setIzquierdo(nodo.getIzquierdo());
-                    nuevoNodo.setDerecho(eliminar(sucesor.getClave(), nodo.getDerecho(), b));
-                    nuevoNodo.recalcularAltura();
-                    nodo = nuevoNodo;
-                } else {
-                    // uno o cero hijos
-                    nodo = (nodo.getIzquierdo() != null) ? nodo.getIzquierdo() : nodo.getDerecho();
-                }
             }
         }
         return b[0] ? balancear(nodo) : nodo;

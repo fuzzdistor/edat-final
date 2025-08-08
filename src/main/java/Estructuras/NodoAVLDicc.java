@@ -28,9 +28,13 @@ public class NodoAVLDicc {
         return clave;
     }
 
+    public void setClave(Comparable clave) {
+        this.clave = clave;
+    }
     public void setDato(Object dato) {
         this.dato = dato;
     }
+
 
     public NodoAVLDicc getIzquierdo() {
         return hijoIzquierdo;
